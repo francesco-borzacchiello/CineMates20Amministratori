@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.Hyperlink?>
+<VBox alignment="CENTER" minHeight="450.0" minWidth="800.0" spacing="20.0" stylesheets="@../CSS/style.css" styleClass="container" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unina.ingSw.cineMates20.controller.LoginController">
+   <children>
+      <Label text="Login" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="35.0" />
+         </font>
+      </Label>
+      <TextField fx:id="emailTextField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="250.0" promptText="Indirizzo e-mail" stylesheets="@../CSS/style.css" styleClass="styleTextField"/>
+      <PasswordField fx:id="passwordField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="250.0" promptText="Password" styleClass="styleTextField"/>
+      <Button fx:id="loginButton" styleClass="styleButton" text="LOGIN" textFill="WHITE">
+         <padding>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+         </padding>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Hyperlink text="Password dimenticata?" textFill="WHITE" focusTraversable="false">
+         <font>
+            <Font size="14.0" />
+         </font></Hyperlink>
+      <Label text="Per ottenere nuove credenziali di accesso, &#10;rivolgersi ad un superiore" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>

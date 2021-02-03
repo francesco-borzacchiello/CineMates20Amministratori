@@ -1,0 +1,26 @@
+.container {
+    -fx-background-color: #027db4;
+}
+
+.styleTextField {
+    -fx-text-inner-color: white;
+    -fx-background-color: transparent;
+    -fx-border: 0 0 2px 0;
+    -fx-padding: 0 0 10px 0;
+    -fx-border-color: transparent transparent white transparent;
+    -fx-border-style: solid;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.4em;
+}
+
+.inputError {
+    -fx-background-image: url('image/inputError.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right center;
+    -fx-background-size: contain;
+}
+
+.styleButton {
+    -fx-background-color: #169BD5;
+    -fx-font-weight: bold;
+}
