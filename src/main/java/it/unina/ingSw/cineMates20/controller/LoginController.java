@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import it.unina.ingSw.cineMates20.model.LoginModel;
 import it.unina.ingSw.cineMates20.utils.FXMLUtils;
 import it.unina.ingSw.cineMates20.utils.MessageDialog;
 import it.unina.ingSw.cineMates20.utils.NameResources;
@@ -34,7 +35,7 @@ public class LoginController extends Controller{
 
     private boolean emailValid, passwordValid;
 
-    //private final LoginModel loginModel;
+    private final LoginModel loginModel = new LoginModel();
 
     public void setStage(Stage stage) {
         loginStage = stage;
@@ -46,13 +47,14 @@ public class LoginController extends Controller{
         loginStage.show();
     }
 
+    @FXML
     @Override
     public void initialize() {
         loginButton.setDisable(false);
-        addEventListner();
+        addEventListener();
     }
 
-    private void addEventListner() {
+    private void addEventListener() {
         addEventListenerToEmailTextField();
         addEventListenerToPasswordField();
         addEventListenerToLoginButton();
@@ -62,21 +64,12 @@ public class LoginController extends Controller{
         loginButton.setOnAction(event -> {
             loginStage  = (Stage) ((Node)event.getSource()).getScene().getWindow();
             try {
-                HomeController homeController = new HomeController();
-                homeController.setStage(loginStage);
-                homeController.start();
-                //loginStage.setScene(FXMLUtils.setRoot(Resources.get(NameResources.HOME_LAYOUT)));
-
-
-                /*String pwd = passwordField.getText();
-                String hash = BCrypt.hashpw(pwd, BCrypt.gensalt());
-                System.out.println(hash);*/
-
-                /*if (BCrypt.checkpw(PWD_INSERITA_UTENTE, HASH_SALVATO_SU_DB)) {
-                    System.out.println("Login effettuato con successo");
-                } else {
-                    System.out.println("Le credenziali sono errate");
-                }*/
+                if(loginModel.login(emailTextField.getText(), passwordField.getText())) {
+                    HomeController homeController = new HomeController();
+                    homeController.setStage(loginStage);
+                    homeController.start();
+                }else
+                    MessageDialog.info("Credenziali errate", "Email e password non corrispondono!!");
             }catch(Exception e){
                 loginStage.close();
                 MessageDialog.error("Si è verificato un errore",

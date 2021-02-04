@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Desktop" />
         <module name="CineMates20Amministratori" />
+        <module name="CineMatesAmministratoriLS" />
       </profile>
     </annotationProcessing>
   </component>

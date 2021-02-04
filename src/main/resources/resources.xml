@@ -5,4 +5,14 @@
     <entry key="LOGIN_LAYOUT">login</entry>
     <entry key="HOME_LAYOUT">home</entry>
     <entry key="DIRECTORY_FXML">FXML</entry>
+
+    <!-- Path DB interno -->
+    <entry key="DB_PATH">http://databasecinemates20-env.eba-itkikzsk.eu-west-3.elasticbeanstalk.com/ServerCineMates20/</entry>
+
+    <!-- Path admin -->
+    <entry key="ADMIN_PATH">Admin/</entry>
+
+    <!-- Path recupero hash password -->
+    <entry key="GET_PSW_HASH_PATH">getHashPassword</entry>
+
 </properties>

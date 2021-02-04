@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="navigationMenuVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" styleClass="image_profile" />
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label styleClass="admin_style" text="Nome" />
+                  <Label styleClass="admin_style" text="Cognome" />
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
+      <Separator prefWidth="200.0" styleClass="up_black_line" />
+      <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" styleClass="button_navigation_menu">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="pending_icon" />
+            <Label maxWidth="1.7976931348623157E308" styleClass="white_font" text="Segnalazioni pendenti" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" styleClass="button_navigation_menu">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="history_icon" />
+            <Label maxWidth="1.7976931348623157E308" styleClass="white_font" text="Storico segnalazioni gestite" />
+         </children>
+      </HBox>
+      <Separator prefWidth="200.0" styleClass="up_black_line" />
+      <HBox fx:id="advHBox" alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" styleClass="button_navigation_menu">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="adv_icon" />
+            <Label maxWidth="1.7976931348623157E308" styleClass="white_font" text="Invia messaggio promozionale" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" styleClass="button_navigation_menu">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="recommend_icon" />
+            <Label maxWidth="1.7976931348623157E308" styleClass="white_font" text="Raccomanda film agli utenti" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" styleClass="button_navigation_menu">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="statistics_icon" />
+            <Label maxWidth="1.7976931348623157E308" styleClass="white_font" text="Statistiche in tempo reale" />
+         </children>
+      </HBox>
+      <Separator prefWidth="200.0" styleClass="up_black_line" />
+      <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" styleClass="button_navigation_menu">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="info_icon" />
+            <Label maxWidth="1.7976931348623157E308" styleClass="white_font" text="Informazioni" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" styleClass="button_navigation_menu">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="logout_icon" />
+            <Label maxWidth="1.7976931348623157E308" styleClass="white_font" text="Logout" />
+         </children>
+      </HBox>
+   </children>
+   <styleClass>
+      <String fx:value="black_border" />
+      <String fx:value="container" />
+   </styleClass>
+</VBox>

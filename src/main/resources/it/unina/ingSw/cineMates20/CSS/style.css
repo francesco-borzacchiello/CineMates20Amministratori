@@ -1,12 +1,13 @@
 .container {
     -fx-background-color: #027db4;
+    -fx-text-inner-color: white;
 }
 
 .styleTextField {
-    -fx-text-inner-color: white;
+    /*-fx-text-inner-color: white;*/
     -fx-background-color: transparent;
     -fx-border: 0 0 2px 0;
-    -fx-padding: 0 0 10px 0;
+    -fx-padding: 0 0 0.5em 0;
     -fx-border-color: transparent transparent white transparent;
     -fx-border-style: solid;
     -fx-font-weight: bold;
@@ -18,9 +19,83 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: right center;
     -fx-background-size: contain;
+    -fx-padding: 0 2.8em 0.5em 0;
 }
 
 .styleButton {
     -fx-background-color: #169BD5;
     -fx-font-weight: bold;
+}
+
+/**************************************Navigation menu*****************************************/
+
+.button_navigation_menu {
+    -fx-background-color: transparent;
+    -fx-font-size: 1.4em;
+    -fx-border-insets: 1.2em;
+    -fx-border-color: transparent;
+    -fx-border-style: solid;
+    -fx-text-alignment: left;
+}
+
+.white_font {
+    -fx-text-fill: white;
+    -fx-label-padding: 1em;
+}
+
+.button_navigation_menu:hover {
+    -fx-background-color: #169BD5;
+}
+
+.black_border {
+    -fx-border-insets: 1.2em;
+    -fx-border-color: black;
+    -fx-border-style: solid;
+    -fx-border-radius: 2em;
+}
+
+.up_black_line .line{
+    -fx-border-color: black;
+    -fx-border-style: solid;
+    -fx-border-width: 0.1em 0 0 0 ;
+    -fx-background-color: transparent;
+}
+
+.image_profile {
+    -fx-image: url("image/profile_picture.png");
+}
+
+.admin_style {
+    -fx-text-fill: white;
+    -fx-font-size: 1.7em;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 0 0.5em;
+}
+
+.adv_icon {
+    -fx-image: url("image/icon/adv.png");
+}
+
+.info_icon {
+    -fx-image: url("image/icon/info.png");
+}
+
+.logout_icon {
+    -fx-image: url("image/icon/logout.png");
+}
+
+.recommend_icon {
+    -fx-image: url("image/icon/messaggio_promozionale.png");
+}
+
+.pending_icon {
+    -fx-image: url("image/icon/pending.png");
+}
+
+.statistics_icon {
+    -fx-image: url("image/icon/statistiche.png");
+}
+
+.history_icon {
+    -fx-image: url("image/icon/history.png");
 }
