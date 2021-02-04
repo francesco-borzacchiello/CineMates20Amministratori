@@ -1,27 +1,27 @@
 package it.unina.ingSw.cineMates20.controller;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import it.unina.ingSw.cineMates20.FXMLUtils;
+import it.unina.ingSw.cineMates20.utils.FXMLUtils;
+import it.unina.ingSw.cineMates20.utils.MessageDialog;
+import it.unina.ingSw.cineMates20.utils.NameResources;
+import it.unina.ingSw.cineMates20.utils.Resources;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class LoginController implements Initializable {
+public class LoginController extends Controller{
 
-    private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+    private static final Pattern
+            VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE),
-                                 VALID_PASSWORD_REGEX = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$");
+            VALID_PASSWORD_REGEX =
+                    Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=_-])(?=\\S+$).{8,}$");
 
     @FXML
     private TextField emailTextField;
@@ -36,34 +36,51 @@ public class LoginController implements Initializable {
 
     //private final LoginModel loginModel;
 
+    public void setStage(Stage stage) {
+        loginStage = stage;
+    }
+
     public void start() throws IOException {
-        loginStage.setScene(FXMLUtils.setRoot("login"));
+        loginStage.setScene(FXMLUtils.setRoot(Resources.get(NameResources.LOGIN_LAYOUT)));
         loginStage.setTitle("Login - CineMates20 Pannello Amministratori");
         loginStage.show();
     }
-    
-    //TODO:Creare una super classe Controller con una definizione di abstract initialize();
+
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize() {
         loginButton.setDisable(false);
+        addEventListner();
+    }
+
+    private void addEventListner() {
         addEventListenerToEmailTextField();
         addEventListenerToPasswordField();
         addEventListenerToLoginButton();
-
     }
 
     private void addEventListenerToLoginButton(){
         loginButton.setOnAction(event -> {
             loginStage  = (Stage) ((Node)event.getSource()).getScene().getWindow();
             try {
-                loginStage.setScene(FXMLUtils.setRoot("hom"));
+                HomeController homeController = new HomeController();
+                homeController.setStage(loginStage);
+                homeController.start();
+                //loginStage.setScene(FXMLUtils.setRoot(Resources.get(NameResources.HOME_LAYOUT)));
+
+
+                /*String pwd = passwordField.getText();
+                String hash = BCrypt.hashpw(pwd, BCrypt.gensalt());
+                System.out.println(hash);*/
+
+                /*if (BCrypt.checkpw(PWD_INSERITA_UTENTE, HASH_SALVATO_SU_DB)) {
+                    System.out.println("Login effettuato con successo");
+                } else {
+                    System.out.println("Le credenziali sono errate");
+                }*/
             }catch(Exception e){
                 loginStage.close();
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Si è verificato un errore");
-                alert.setHeaderText(null);
-                alert.setContentText("Si è verificato un errore, riprova tra qualche minuto a riaprire l'applicativo!!");
-                alert.showAndWait();
+                MessageDialog.error("Si è verificato un errore",
+                        "Si è verificato un errore, riprova tra qualche minuto a riaprire l'applicativo!!");
             }
         });
     }
@@ -72,10 +89,7 @@ public class LoginController implements Initializable {
         passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
             Matcher matcher = VALID_PASSWORD_REGEX.matcher(passwordField.getText());
             passwordValid = matcher.find();
-            if(!passwordValid)
-                passwordField.getStyleClass().add("inputError");
-            else
-                passwordField.getStyleClass().removeIf(style -> style.equals("inputError"));
+            showError(!passwordValid, passwordField);
             loginButton.setDisable(!(emailValid && passwordValid));
         });
     }
@@ -84,15 +98,16 @@ public class LoginController implements Initializable {
         emailTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailTextField.getText());
             emailValid = matcher.find();
-            if(!emailValid)
-                emailTextField.getStyleClass().add("inputError");
-            else
-                emailTextField.getStyleClass().removeIf(style -> style.equals("inputError"));
+            showError(!emailValid, emailTextField);
             loginButton.setDisable(!(emailValid && passwordValid));
         });
     }
 
-    public void setStage(Stage stage) {
-        loginStage = stage;
+    private void showError(boolean show, TextField textField) {
+        if(show)
+            textField.getStyleClass().add(Resources.get(NameResources.CSS_CLASS_INPUT_ERROR));
+        else
+            textField.getStyleClass().removeIf(style ->
+                    style.equals(Resources.get(NameResources.CSS_CLASS_INPUT_ERROR)));
     }
 }
