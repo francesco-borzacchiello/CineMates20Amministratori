@@ -169,3 +169,25 @@
 .margin_3em {
     -fx-border-insets: 3em;
 }
+
+/**************************************Tasti item segnalazioni*****************************************/
+
+.report_item_button_style {
+    -fx-background-color: #F0F0F0;
+    -fx-padding: 1em;
+    -fx-background-radius: 1em;
+    -fx-border-radius: 1em;
+    -fx-border-width: 0.1em;
+    -fx-border-color: black;
+    -fx-max-width: 25em;
+    -fx-max-height: 10em;
+}
+
+.report_item_button_style_enabled:hover {
+    -fx-background-color: #00C7FF;
+}
+
+/*
+.margin_1em {
+    -fx-border-insets: 1em;
+}*/

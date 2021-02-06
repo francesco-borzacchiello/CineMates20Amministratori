@@ -1,11 +1,8 @@
 package it.unina.ingSw.cineMates20.controller;
 
-import info.movito.themoviedbapi.TmdbApi;
-import info.movito.themoviedbapi.TmdbMovies;
-import info.movito.themoviedbapi.model.MovieDb;
 import it.unina.ingSw.cineMates20.model.S3Manager;
-import it.unina.ingSw.cineMates20.utils.MessageDialog;
-import it.unina.ingSw.cineMates20.utils.NameResources;
+import it.unina.ingSw.cineMates20.view.MessageDialog;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -18,8 +15,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
-import it.unina.ingSw.cineMates20.utils.Resources;
 
 public class NavigationMenuController extends Controller {
 
@@ -50,18 +45,20 @@ public class NavigationMenuController extends Controller {
         //TODO:settare i restanti listener dei tasti attivi
         addEventListener();
 
-        /*TmdbMovies tmdbMovies = new TmdbMovies(new TmdbApi(Resources.get(NameResources.TMDB_API_KEY)));
-        MovieDb movie = tmdbMovies.getMovie(293660, "it");
-        profile_image.setImage(new Image(Resources.get(NameResources.FIRST_PATH_IMAGE) + movie.getPosterPath()));*/
-
-        InputStream profileImageInputStream = s3Manager.getProfilePictureInputStream("fran.borzacchiello@studenti.unina.it");
-        if(profileImageInputStream != null)
-            profile_image.setImage(new Image(profileImageInputStream));
-        else {
-            File file = new File("src/main/resources/it/unina/ingSw/cineMates20/CSS/image/profile_picture.png");
-            profile_image.setImage(new Image(file.toURI().toString()));
-        }
-        profile_image.setClip(new Circle(profile_image.getFitWidth() / 2, profile_image.getFitHeight() / 2,50));
+        new Thread(() -> {
+            InputStream profileImageInputStream = s3Manager.getProfilePictureInputStream("fran.borzacchiello@studenti.unina.it");
+            Image image;
+            if (profileImageInputStream != null)
+                image = new Image(profileImageInputStream);
+            else {
+                File file = new File("src/main/resources/it/unina/ingSw/cineMates20/CSS/image/profile_picture.png");
+                image = new Image(file.toURI().toString());
+            }
+            Platform.runLater(() -> {
+                profile_image.setImage(image);
+                profile_image.setClip(new Circle(profile_image.getFitWidth() / 2, profile_image.getFitHeight() / 2, 50));
+            });
+        }).start();
     }
 
     private void addEventListener() {

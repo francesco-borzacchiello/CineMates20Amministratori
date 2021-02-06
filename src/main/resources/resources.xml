@@ -8,6 +8,7 @@
     <entry key="LOGIN_LAYOUT">login</entry>
     <entry key="HOME_LAYOUT">home</entry>
     <entry key="NAVIGATION_MENU_LAYOUT">navigation_menu</entry>
+    <entry key="REPORT_ITEM_LAYOUT">report_movie_item</entry>
 
     <!-- Path DB interno -->
     <entry key="DB_PATH">http://databasecinemates20-env.eba-itkikzsk.eu-west-3.elasticbeanstalk.com/ServerCineMates20/</entry>
@@ -28,7 +29,7 @@
 
     <!-- TmdbApi -->
     <entry key="TMDB_API_KEY">b3a2d6a56e6622052bbf6936ff2ace73</entry>
-    <entry key="FIRST_PATH_IMAGE">https://www.themoviedb.org/t/p/w780</entry>
+    <entry key="FIRST_PATH_IMAGE">https://www.themoviedb.org/t/p/w185</entry>
     <entry key="FIRST_PATH_IMAGE_ORIGINAL">https://www.themoviedb.org/t/p/original</entry>
 
 </properties>

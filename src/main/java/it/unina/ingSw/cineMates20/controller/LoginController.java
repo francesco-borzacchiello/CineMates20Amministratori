@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 import it.unina.ingSw.cineMates20.model.LoginModel;
 import it.unina.ingSw.cineMates20.utils.FXMLUtils;
-import it.unina.ingSw.cineMates20.utils.MessageDialog;
+import it.unina.ingSw.cineMates20.view.MessageDialog;
 import it.unina.ingSw.cineMates20.utils.NameResources;
 import it.unina.ingSw.cineMates20.utils.Resources;
 import javafx.fxml.FXML;

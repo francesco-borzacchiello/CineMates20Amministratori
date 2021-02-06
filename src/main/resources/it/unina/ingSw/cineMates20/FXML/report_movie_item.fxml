@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox fx:id="movieHBox" maxHeight="1.7976931348623157E308" maxWidth="370.0" minWidth="370.0" prefWidth="370.0" styleClass="report_item_button_style" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unina.ingSw.cineMates20.controller.ReportMovieItemController">
+   <ImageView fx:id="movieImageView" fitHeight="147.77" fitWidth="100" pickOnBounds="true" preserveRatio="true">
+      <Image url="@../CSS/image/not_found.jpg" />
+   </ImageView>
+   <VBox minWidth="250.0" prefHeight="130.0" prefWidth="250.0">
+      <Label fx:id="titleLabel" styleClass="black_font_for_button_report" text="Titolo">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="reportsCountLabel" text="Numero segnalazioni:" textFill="#027db4">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+   </VBox>
+</HBox>

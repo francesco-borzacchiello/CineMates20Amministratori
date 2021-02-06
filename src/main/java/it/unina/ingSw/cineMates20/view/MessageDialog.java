@@ -1,4 +1,4 @@
-package it.unina.ingSw.cineMates20.utils;
+package it.unina.ingSw.cineMates20.view;
 
 import javafx.scene.control.Alert;
 

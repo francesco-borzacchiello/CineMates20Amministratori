@@ -7,6 +7,7 @@ public enum NameResources {
     LOGIN_LAYOUT,
     HOME_LAYOUT,
     NAVIGATION_MENU_LAYOUT,
+    REPORT_ITEM_LAYOUT,
 
     DB_PATH,
     ADMIN_PATH,
