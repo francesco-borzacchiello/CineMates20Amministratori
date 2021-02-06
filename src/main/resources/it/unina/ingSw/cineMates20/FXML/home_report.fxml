@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unina.ingSw.cineMates20.controller.PendingReportController">
+   <children>
+      <Label alignment="TOP_CENTER" contentDisplay="TOP" maxWidth="1.7976931348623157E308" styleClass="white_title" text="Scegliere il tipo di segnalazioni che si desidera visionare:" textAlignment="CENTER">
+         <VBox.margin>
+            <Insets left="30.0" />
+         </VBox.margin></Label>
+      <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+
+         <children>
+            <HBox id="film_HBox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="280.0" GridPane.halignment="CENTER">
+               <children>
+                  <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" styleClass="film_icon" />
+                  <Label styleClass="black_font_for_button_report" text="Film">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <styleClass>
+                  <String fx:value="report_button_style" />
+                  <String fx:value="report_button_style_enabled" />
+               </styleClass>
+            </HBox>
+            <HBox id="utenti_HBox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="280.0" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+               <children>
+                  <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" styleClass="utenti_icon" />
+                  <Label styleClass="black_font_for_button_report" text="Utenti">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <styleClass>
+                  <String fx:value="report_button_style" />
+                  <String fx:value="report_button_style_enabled" />
+               </styleClass>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="280.0" styleClass="report_button_style_disabled" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" styleClass="commenti_icon" />
+                  <Label styleClass="black_font_for_button_report" text="Commenti">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="280.0" styleClass="report_button_style_disabled" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" styleClass="recensioni_icon" />
+                  <Label styleClass="black_font_for_button_report" text="Recensioni">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="280.0" styleClass="report_button_style_disabled" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <children>
+                  <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" styleClass="messaggi_icon" />
+                  <Label styleClass="black_font_for_button_report" text="Messaggi">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </HBox>
+         </children>
+         <columnConstraints>
+            <ColumnConstraints prefWidth="300.0" />
+            <ColumnConstraints prefWidth="300.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="100.0" prefHeight="100.0" />
+            <RowConstraints minHeight="100.0" prefHeight="100.0" />
+            <RowConstraints minHeight="100.0" prefHeight="100.0" />
+         </rowConstraints>
+         <VBox.margin>
+            <Insets top="100.0" />
+         </VBox.margin>
+      </GridPane>
+   </children>
+   <styleClass>
+      <String fx:value="container" />
+      <String fx:value="margin_3em" />
+      <String fx:value="left_line" />
+   </styleClass>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</VBox>

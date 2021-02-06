@@ -17,9 +17,10 @@ public class App extends Application {
 
     @Override
     public void start(@NotNull Stage stage) throws IOException {
-        LoginController loginController = new LoginController();
+        /*LoginController loginController = new LoginController();
         loginController.setStage(stage);
-        loginController.start();
+        loginController.start();*/
+        new LoginController().start(stage);
     }
 
     public static void main(String[] args) {

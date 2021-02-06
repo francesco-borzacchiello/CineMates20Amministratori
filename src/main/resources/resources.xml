@@ -2,9 +2,12 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
     <entry key="CSS_CLASS_INPUT_ERROR">inputError</entry>
+    <entry key="DIRECTORY_FXML">FXML</entry>
+
+    <!--Nomi dei file di layout, privi di estensione-->
     <entry key="LOGIN_LAYOUT">login</entry>
     <entry key="HOME_LAYOUT">home</entry>
-    <entry key="DIRECTORY_FXML">FXML</entry>
+    <entry key="NAVIGATION_MENU_LAYOUT">navigation_menu</entry>
 
     <!-- Path DB interno -->
     <entry key="DB_PATH">http://databasecinemates20-env.eba-itkikzsk.eu-west-3.elasticbeanstalk.com/ServerCineMates20/</entry>
@@ -14,5 +17,18 @@
 
     <!-- Path recupero hash password -->
     <entry key="GET_PSW_HASH_PATH">getHashPassword</entry>
+
+    <!-- TODO: spostare le credenziali in un luogo sicuro -->
+    <!-- Credenziali IAM User AWS -->
+    <entry key="IAM_ACCESS_KEY">AKIASIIR74FZGEJFLJGN</entry>
+    <entry key="IAM_SECRET_KEY">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</entry>
+
+    <!-- Nome Bucket S3 -->
+    <entry key="S3_BUCKET_NAME">amplify-cinemates20-dev-75004-deployment</entry>
+
+    <!-- TmdbApi -->
+    <entry key="TMDB_API_KEY">b3a2d6a56e6622052bbf6936ff2ace73</entry>
+    <entry key="FIRST_PATH_IMAGE">https://www.themoviedb.org/t/p/w780</entry>
+    <entry key="FIRST_PATH_IMAGE_ORIGINAL">https://www.themoviedb.org/t/p/original</entry>
 
 </properties>

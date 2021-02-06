@@ -2,10 +2,21 @@ package it.unina.ingSw.cineMates20.utils;
 
 public enum NameResources {
     CSS_CLASS_INPUT_ERROR,
+    DIRECTORY_FXML,
+
     LOGIN_LAYOUT,
     HOME_LAYOUT,
-    DIRECTORY_FXML,
+    NAVIGATION_MENU_LAYOUT,
+
     DB_PATH,
     ADMIN_PATH,
-    GET_PSW_HASH_PATH
+    GET_PSW_HASH_PATH,
+
+    IAM_ACCESS_KEY,
+    IAM_SECRET_KEY,
+    S3_BUCKET_NAME,
+
+    TMDB_API_KEY,
+    FIRST_PATH_IMAGE,
+    FIRST_PATH_IMAGE_ORIGINAL
 }

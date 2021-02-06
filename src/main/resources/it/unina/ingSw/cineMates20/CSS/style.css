@@ -35,18 +35,20 @@
     -fx-border-insets: 1.2em;
     -fx-border-color: transparent;
     -fx-border-style: solid;
-    -fx-text-alignment: left;
 }
 
-.white_font {
+.white_font_for_button_enabled {
     -fx-text-fill: white;
-    -fx-label-padding: 1em;
 }
 
-.button_navigation_menu:hover {
+.button_navigation_menu_enabled:hover {
     -fx-background-color: #169BD5;
 }
 
+#last_button:hover {
+    -fx-background-color: #169BD5;
+    -fx-background-radius: 0 0 2em 2em;
+}
 .black_border {
     -fx-border-insets: 1.2em;
     -fx-border-color: black;
@@ -61,9 +63,7 @@
     -fx-background-color: transparent;
 }
 
-.image_profile {
-    -fx-image: url("image/profile_picture.png");
-}
+/**************************************Stile header Navigation menu*****************************************/
 
 .admin_style {
     -fx-text-fill: white;
@@ -72,30 +72,100 @@
     -fx-padding: 0 0 0 0.5em;
 }
 
+/**************************************Icone tasti Navigation menu*****************************************/
+
 .adv_icon {
-    -fx-image: url("image/icon/adv.png");
+    -fx-image: url("image/icon/navigation_menu/adv.png");
 }
 
 .info_icon {
-    -fx-image: url("image/icon/info.png");
+    -fx-image: url("image/icon/navigation_menu/info.png");
 }
 
 .logout_icon {
-    -fx-image: url("image/icon/logout.png");
+    -fx-image: url("image/icon/navigation_menu/logout.png");
 }
 
 .recommend_icon {
-    -fx-image: url("image/icon/messaggio_promozionale.png");
+    -fx-image: url("image/icon/navigation_menu/messaggio_promozionale.png");
 }
 
 .pending_icon {
-    -fx-image: url("image/icon/pending.png");
+    -fx-image: url("image/icon/navigation_menu/pending.png");
 }
 
 .statistics_icon {
-    -fx-image: url("image/icon/statistiche.png");
+    -fx-image: url("image/icon/navigation_menu/statistiche.png");
 }
 
 .history_icon {
-    -fx-image: url("image/icon/history.png");
+    -fx-image: url("image/icon/navigation_menu/history.png");
+}
+
+.padding_1em {
+    -fx-padding: 1em;
+}
+
+.white_title {
+    -fx-text-fill: white;
+    -fx-font-size: 3.4em;
+    -fx-font-weight: bold;
+}
+
+.film_icon {
+    -fx-image: url("image/icon/report_icons/film.png");
+}
+
+.utenti_icon {
+    -fx-image: url("image/icon/report_icons/utenti.png");
+}
+
+.commenti_icon {
+    -fx-image: url("image/icon/report_icons/commenti.png");
+}
+
+.recensioni_icon {
+    -fx-image: url("image/icon/report_icons/recensioni.png");
+}
+
+.messaggi_icon {
+    -fx-image: url("image/icon/report_icons/messaggi.png");
+}
+
+.report_button_style {
+    -fx-background-color: #F0F0F0;
+    -fx-padding: 1em;
+    -fx-background-radius: 1em;
+    -fx-border-radius: 1em;
+    -fx-border-width: 0.1em;
+    -fx-border-color: black;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);
+}
+
+.report_button_style_enabled:hover {
+    -fx-background-color: #00C7FF;
+}
+
+.report_button_style_disabled {
+    -fx-background-color: #A0A0A0;
+    -fx-padding: 1em;
+    -fx-background-radius: 1em;
+    -fx-border-radius: 1em;
+    -fx-border-width: 0.1em;
+    -fx-border-color: black;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);
+}
+
+.black_font_for_button_report {
+    -fx-text-fill: black;
+    -fx-font-size: 1.7em;
+    -fx-font-weight: bold;
+}
+
+.left_line {
+    -fx-border-color: transparent transparent transparent black;
+}
+
+.margin_3em {
+    -fx-border-insets: 3em;
 }

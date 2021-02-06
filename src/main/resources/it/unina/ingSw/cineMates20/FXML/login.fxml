@@ -7,7 +7,7 @@
 
 <VBox alignment="CENTER" minHeight="450.0" minWidth="800.0" spacing="20.0" styleClass="container" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unina.ingSw.cineMates20.controller.LoginController">
    <children>
-      <Label text="Login" textFill="WHITE">
+      <Label styleClass="white_title" text="Login" textFill="WHITE">
          <font>
             <Font name="System Bold" size="35.0" />
          </font>
@@ -22,7 +22,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Hyperlink focusTraversable="false" text="Password dimenticata?" textFill="WHITE">
+      <Hyperlink fx:id="resetPasswordHyperLink" focusTraversable="false" text="Password dimenticata?" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>
