@@ -77,10 +77,11 @@ public class ReportUsersContainerController extends Controller{
             actualUser = restTemplate.getForObject(url, UserDB.class, reportedUserDB.getFKUtenteSegnalato());
 
             if(sortedUsersMapByReportsNum.get(actualUser) == null) {
-                ArrayList<String> list = new ArrayList<>();
-                list.add(reportedUserDB.getFKUtenteSegnalatore());
-                sortedUsersMapByReportsNum.put(actualUser, list); //Inizialmente le mappe non sono ordinate
-                sortedUsersMapByName.put(actualUser, list);
+                ArrayList<String> list1 = new ArrayList<>(), list2 = new ArrayList<>();
+                list1.add(reportedUserDB.getFKUtenteSegnalatore());
+                list2.add(reportedUserDB.getFKUtenteSegnalatore());
+                sortedUsersMapByReportsNum.put(actualUser, list1); //Inizialmente le mappe non sono ordinate
+                sortedUsersMapByName.put(actualUser, list2);
             }
             else {
                 sortedUsersMapByReportsNum.get(actualUser).add(reportedUserDB.getFKUtenteSegnalatore());
@@ -199,7 +200,7 @@ public class ReportUsersContainerController extends Controller{
             else {
                 try {
                     Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-                    new HomeController().start();
+                    new HomeController().start(true);
                     stage.close();
                 } catch (IOException ignore) {}
             }

@@ -1,9 +1,13 @@
 package it.unina.ingSw.cineMates20.controller;
 
+import it.unina.ingSw.cineMates20.App;
 import it.unina.ingSw.cineMates20.model.S3Manager;
+import it.unina.ingSw.cineMates20.utils.NameResources;
 import it.unina.ingSw.cineMates20.view.MessageDialog;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -21,11 +25,23 @@ public class NavigationMenuController extends Controller {
     private HBox logOutHBox;
 
     @FXML
+    private Label pendingReportsLabel,
+                  managedReportsLabel,
+                  informationLabel;
+
+    @FXML
+    private HBox pendingReportsHBox,
+                 managedReportsHBox,
+                 informationHBox;
+
+    @FXML
     private ImageView profile_image;
 
     private final FileChooser fileChooser;
 
     private final S3Manager s3Manager;
+
+    private HomeController homeController;
 
     public NavigationMenuController() {
         fileChooser = new FileChooser();
@@ -38,12 +54,14 @@ public class NavigationMenuController extends Controller {
         s3Manager = new S3Manager();
     }
 
+    public void start(HomeController homeController) {
+        addEventListener();
+        this.homeController = homeController;
+    }
+
     @FXML
     @Override
     protected void initialize() {
-        //TODO:settare i restanti listener dei tasti attivi
-        addEventListener();
-
         InputStream profileImageInputStream = s3Manager.getProfilePictureInputStream("fran.borzacchiello@studenti.unina.it");
         Image image;
         if (profileImageInputStream != null)
@@ -55,23 +73,69 @@ public class NavigationMenuController extends Controller {
 
         profile_image.setImage(image);
         profile_image.setClip(new Circle(profile_image.getFitWidth() / 2, profile_image.getFitHeight() / 2, 50));
+
+        pendingReportsLabel.getStyleClass().clear();
+        pendingReportsLabel.getStyleClass().addAll("cyan_font_for_button_selected", "padding_1em");
     }
 
     private void addEventListener() {
         addEventListenerToLogoutButton();
+        addEventListenerToPendingReportsButton();
+        addEventListenerToManagedReportsButton();
+        addEventListenerToInformationButton();
         addEventListenerToSetProfileImage();
     }
 
     private void addEventListenerToLogoutButton() {
         logOutHBox.setOnMouseClicked(mouseEvent -> {
             Stage actualStage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
-            actualStage.close();
             try {
                 openLogin();
             } catch (IOException e) {
                 MessageDialog.error("Si è verificato un errore",
                         "Si è verificato un errore, riprova tra qualche minuto a riaprire l'applicativo!!");
             }
+            actualStage.close();
+        });
+    }
+
+    private void addEventListenerToPendingReportsButton() {
+        pendingReportsHBox.setOnMouseClicked(mouseEvent -> {
+            setPendingReportsActive();
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("FXML/home_report.fxml"));
+            try {
+                Node pendingReport = loader.load();
+                ReportController reportController = loader.getController();
+                reportController.startPendingReports(homeController);
+                homeController.replaceHomeNode(pendingReport);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //HomeController.getHomeControllerInstance().startPendingReports();
+        });
+    }
+
+    private void addEventListenerToManagedReportsButton() {
+        managedReportsHBox.setOnMouseClicked(mouseEvent -> {
+            setManagedReportsActive();
+
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("FXML/home_report.fxml"));
+            try {
+                Node pendingReport = loader.load();
+                ReportController reportController = loader.getController();
+                reportController.startManagedReports(homeController);
+                homeController.replaceHomeNode(pendingReport);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //HomeController.getHomeControllerInstance().startManagedReports();
+        });
+    }
+
+    private void addEventListenerToInformationButton() {
+        informationHBox.setOnMouseClicked(mouseEvent -> {
+            setInformationActive();
+            //TODO: continuare...
         });
     }
 
@@ -89,5 +153,35 @@ public class NavigationMenuController extends Controller {
 
     private void openLogin() throws IOException {
         new LoginController().start();
+    }
+
+    public void setPendingReportsActive() {
+        managedReportsLabel.getStyleClass().clear();
+        managedReportsLabel.getStyleClass().addAll("white_font_for_button_enabled", "padding_1em");
+        informationLabel.getStyleClass().clear();
+        informationLabel.getStyleClass().addAll("white_font_for_button_enabled", "padding_1em");
+
+        pendingReportsLabel.getStyleClass().clear();
+        pendingReportsLabel.getStyleClass().addAll("cyan_font_for_button_selected", "padding_1em");
+    }
+
+    public void setManagedReportsActive() {
+        pendingReportsLabel.getStyleClass().clear();
+        pendingReportsLabel.getStyleClass().addAll("white_font_for_button_enabled", "padding_1em");
+        informationLabel.getStyleClass().clear();
+        informationLabel.getStyleClass().addAll("white_font_for_button_enabled", "padding_1em");
+
+        managedReportsLabel.getStyleClass().clear();
+        managedReportsLabel.getStyleClass().addAll("cyan_font_for_button_selected", "padding_1em");
+    }
+
+    public void setInformationActive() {
+        pendingReportsLabel.getStyleClass().clear();
+        pendingReportsLabel.getStyleClass().addAll("white_font_for_button_enabled", "padding_1em");
+        managedReportsLabel.getStyleClass().clear();
+        managedReportsLabel.getStyleClass().addAll("white_font_for_button_enabled", "padding_1em");
+
+        informationLabel.getStyleClass().clear();
+        informationLabel.getStyleClass().addAll("cyan_font_for_button_selected", "padding_1em");
     }
 }

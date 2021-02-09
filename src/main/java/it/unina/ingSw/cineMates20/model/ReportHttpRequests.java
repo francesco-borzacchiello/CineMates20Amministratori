@@ -47,12 +47,60 @@ public class ReportHttpRequests {
         return reportedMovies;
     }
 
+    public List<ReportMovieDB> getAllManagedReportedMovies() {
+        List<ReportMovieDB> reportedMovies = new LinkedList<>();
+
+        Thread t = new Thread(()-> {
+            try {
+                String url = DB_PATH + "Report/getAllManagedReportedMovies";
+
+                ResponseEntity<List<ReportMovieDB>> responseReports = restTemplate.exchange(url, HttpMethod.GET,
+                        null, new ParameterizedTypeReference<List<ReportMovieDB>>() {});
+
+                if(responseReports.getBody() != null && !responseReports.getBody().isEmpty())
+                    reportedMovies.addAll(responseReports.getBody());
+
+            }catch(HttpClientErrorException ignore){}
+        });
+        t.start();
+
+        try {
+            t.join();
+        }catch(InterruptedException ignore){}
+
+        return reportedMovies;
+    }
+
     public List<ReportUserDB> getAllReportedUsers() {
         List<ReportUserDB> reportedUsers = new LinkedList<>();
 
         Thread t = new Thread(()-> {
             try {
                 String url = DB_PATH + "Report/getAllReportedUsers";
+
+                ResponseEntity<List<ReportUserDB>> responseReports = restTemplate.exchange(url, HttpMethod.GET,
+                        null, new ParameterizedTypeReference<List<ReportUserDB>>() {});
+
+                if(responseReports.getBody() != null && !responseReports.getBody().isEmpty())
+                    reportedUsers.addAll(responseReports.getBody());
+
+            }catch(HttpClientErrorException ignore){}
+        });
+        t.start();
+
+        try {
+            t.join();
+        }catch(InterruptedException ignore){}
+
+        return reportedUsers;
+    }
+
+    public List<ReportUserDB> getAllManagedReportedUsers() {
+        List<ReportUserDB> reportedUsers = new LinkedList<>();
+
+        Thread t = new Thread(()-> {
+            try {
+                String url = DB_PATH + "Report/getAllManagedReportedUsers";
 
                 ResponseEntity<List<ReportUserDB>> responseReports = restTemplate.exchange(url, HttpMethod.GET,
                         null, new ParameterizedTypeReference<List<ReportUserDB>>() {});

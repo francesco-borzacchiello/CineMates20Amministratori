@@ -26,7 +26,7 @@ import java.util.*;
 
 import static java.util.stream.Collectors.toMap;
 
-public class ReportMoviesContainerController extends Controller{
+public class ManagedReportsMoviesContainerController extends Controller{
 
     @FXML
     private VBox emptyDialogVBox;
@@ -56,7 +56,7 @@ public class ReportMoviesContainerController extends Controller{
 
         searchBoxCustomTextField.textProperty().addListener((observable, oldValue, newValue) -> onEnter());
 
-        List<ReportMovieDB> reportedMoviesDB = new ReportHttpRequests().getAllReportedMovies();
+        List<ReportMovieDB> reportedMoviesDB = new ReportHttpRequests().getAllManagedReportedMovies();
         if(reportedMoviesDB.size() == 0) {
             showEmptyReports();
             return;
@@ -195,7 +195,7 @@ public class ReportMoviesContainerController extends Controller{
             else {
                 try {
                     Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-                    new HomeController().start(true);
+                    new HomeController().start(false);
                     stage.close();
                 } catch (IOException ignore) {}
             }

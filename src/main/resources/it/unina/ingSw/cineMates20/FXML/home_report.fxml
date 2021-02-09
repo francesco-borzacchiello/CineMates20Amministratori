@@ -18,10 +18,7 @@
         <String fx:value="margin_3em"/>
         <String fx:value="left_line"/>
     </styleClass>
-    <opaqueInsets>
-        <Insets/>
-    </opaqueInsets>
-    <Label alignment="TOP_CENTER" contentDisplay="TOP" maxWidth="1.7976931348623157E308" styleClass="white_title"
+    <Label fx:id="titleLabel" alignment="TOP_CENTER" contentDisplay="TOP" maxWidth="1.7976931348623157E308" styleClass="white_title"
            text="Scegliere il tipo di segnalazioni che si desidera visionare:" textAlignment="CENTER">
         <VBox.margin>
             <Insets left="30.0"/>

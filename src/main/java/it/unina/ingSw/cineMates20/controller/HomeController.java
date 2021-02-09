@@ -22,29 +22,53 @@ public class HomeController extends Controller{
 
     private Stage homeStage;
 
+    private ReportController reportController;
+
+    private NavigationMenuController navigationMenuController;
+    private static boolean startPendingReports;
+
+    public HomeController () {}
+
     @FXML
     @Override
     protected void initialize() {
-        Node navigationMenu = null, reportHome = null;
+        Node navigationMenu, reportHome;
         try {
-            navigationMenu = FXMLUtils.loadFXML(Resources.get(NameResources.NAVIGATION_MENU_LAYOUT));
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("FXML/home_report.fxml"));
-            reportHome = loader.load();
+            //navigationMenu = FXMLUtils.loadFXML(Resources.get(NameResources.NAVIGATION_MENU_LAYOUT));
 
-            ReportController reportController = loader.getController();
-            reportController.start(this);
+            FXMLLoader loader = new FXMLLoader(App.class.getResource(Resources.get(NameResources.DIRECTORY_FXML) + "/" + Resources.get(NameResources.NAVIGATION_MENU_LAYOUT) + ".fxml"));
+            navigationMenu = loader.load();
+            navigationMenuController = loader.getController();
+            navigationMenuController.start(this);
+
+            loader = new FXMLLoader(App.class.getResource("FXML/home_report.fxml"));
+            reportHome = loader.load();
+            reportController = loader.getController();
+            if(startPendingReports) {
+                reportController.startPendingReports(this);
+                navigationMenuController.setPendingReportsActive();
+            } else {
+                reportController.startManagedReports(this);
+                navigationMenuController.setManagedReportsActive();
+            }
         } catch (IOException e) {
             e.printStackTrace();
+            return;
         }
 
         container.setAlignment(Pos.CENTER_LEFT);
         container.getChildren().add(navigationMenu);
         container.getChildren().add(reportHome);
-
     }
 
-    public void start() throws IOException {
+    public void start(boolean startPendingReports) throws IOException {
+        this.startPendingReports = startPendingReports;
         homeStage = new Stage();
+        /*if(homeStage.getScene() != null)
+            homeStage.getScene().setRoot(FXMLUtils.loadFXML(Resources.get(NameResources.HOME_LAYOUT)));
+        else
+            homeStage.setScene(FXMLUtils.setRoot(Resources.get(NameResources.HOME_LAYOUT)));*/
+
         homeStage.setScene(FXMLUtils.setRoot(Resources.get(NameResources.HOME_LAYOUT)));
         homeStage.setMaximized(true);
         homeStage.setTitle("Home - CineMates20 Pannello Amministratori");

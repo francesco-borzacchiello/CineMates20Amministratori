@@ -46,6 +46,10 @@
     -fx-text-fill: white;
 }
 
+.cyan_font_for_button_selected {
+    -fx-text-fill: cyan;
+}
+
 .button_navigation_menu_enabled:hover {
     -fx-background-color: #169BD5;
 }

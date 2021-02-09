@@ -20,13 +20,13 @@
       </VBox>
    </HBox>
    <Separator prefWidth="200.0" styleClass="up_black_line" />
-   <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308">
+   <HBox fx:id="pendingReportsHBox" alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308">
       <styleClass>
          <String fx:value="button_navigation_menu" />
          <String fx:value="button_navigation_menu_enabled" />
       </styleClass>
       <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" styleClass="pending_icon" />
-      <Label maxWidth="1.7976931348623157E308" text="Segnalazioni pendenti">
+      <Label fx:id="pendingReportsLabel" maxWidth="1.7976931348623157E308" text="Segnalazioni pendenti">
          <font>
             <Font size="14.0" />
          </font>
@@ -36,13 +36,13 @@
          </styleClass>
       </Label>
    </HBox>
-   <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308">
+   <HBox fx:id="managedReportsHBox" alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308">
       <styleClass>
          <String fx:value="button_navigation_menu" />
          <String fx:value="button_navigation_menu_enabled" />
       </styleClass>
       <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" styleClass="history_icon" />
-      <Label maxWidth="1.7976931348623157E308" text="Storico segnalazioni gestite">
+      <Label fx:id="managedReportsLabel" maxWidth="1.7976931348623157E308" text="Storico segnalazioni gestite">
          <font>
             <Font size="14.0" />
          </font>
@@ -78,13 +78,13 @@
       </Label>
    </HBox>
    <Separator prefWidth="200.0" styleClass="up_black_line" />
-   <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308">
+   <HBox fx:id="informationHBox" alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308">
       <styleClass>
          <String fx:value="button_navigation_menu" />
          <String fx:value="button_navigation_menu_enabled" />
       </styleClass>
       <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" styleClass="info_icon" />
-      <Label maxWidth="1.7976931348623157E308" text="Informazioni">
+      <Label fx:id="informationLabel" maxWidth="1.7976931348623157E308" text="Informazioni">
          <font>
             <Font size="14.0" />
          </font>

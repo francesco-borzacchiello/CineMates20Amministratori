@@ -91,12 +91,12 @@ public class LoginController extends Controller{
     }
 
     private void addEventListenerToLoginButton(){
+
         loginButton.setOnAction(event -> {
             loginStage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             try {
                 if(loginModel.login(emailTextField.getText(), passwordField.getText()))
-                    //openHome(loginStage);
-                    new HomeController().start();
+                    new HomeController().start(true);
                 else
                     MessageDialog.info("Credenziali errate", "Email e password non corrispondono!!");
             }catch(Exception e){
