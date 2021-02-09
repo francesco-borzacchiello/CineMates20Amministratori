@@ -27,6 +27,11 @@
     -fx-font-weight: bold;
 }
 
+.styleButtonHover:hover {
+    -fx-background-color: #00DAFF;
+    -fx-font-weight: bold;
+}
+
 /**************************************Navigation menu*****************************************/
 
 .button_navigation_menu {
@@ -187,7 +192,16 @@
     -fx-background-color: #00C7FF;
 }
 
-/*
-.margin_1em {
-    -fx-border-insets: 1em;
-}*/
+/*****************************************Searchbar - Toolbar**********************************************/
+
+.searchBoxLabel {
+    -fx-padding: 0 2 0 7;
+}
+
+.searchBoxStyle {
+    -fx-background-radius: 2em;
+    -fx-text-fill: black;
+    -fx-font-size: 1.5em;
+    -fx-border-radius: 2em;
+    -fx-border-color: black;
+}

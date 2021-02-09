@@ -1,19 +1,10 @@
 package it.unina.ingSw.cineMates20.controller;
 
-import info.movito.themoviedbapi.TmdbApi;
-import info.movito.themoviedbapi.TmdbMovies;
-import info.movito.themoviedbapi.model.MovieDb;
-import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import it.unina.ingSw.cineMates20.utils.FXMLUtils;
-import it.unina.ingSw.cineMates20.utils.NameResources;
-import it.unina.ingSw.cineMates20.utils.Resources;
-import it.unina.ingSw.cineMates20.view.GridPaneGenerator;
 import javafx.fxml.FXML;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 
 public class ReportController extends Controller {
 
@@ -29,9 +20,13 @@ public class ReportController extends Controller {
     public void start(HomeController homeController) {
         film_HBox.setOnMouseClicked(mouseEvent -> {
             try {
-                homeController.setHome(FXMLUtils.loadFXML("report_movies_container"));
+                homeController.replaceHomeNode(FXMLUtils.loadFXML("report_movies_container"));
             } catch (IOException ignore) {}
-
+        });
+        utenti_HBox.setOnMouseClicked(mouseEvent -> {
+            try {
+                homeController.replaceHomeNode(FXMLUtils.loadFXML("report_users_container"));
+            } catch (IOException ignore) {}
         });
     }
 }

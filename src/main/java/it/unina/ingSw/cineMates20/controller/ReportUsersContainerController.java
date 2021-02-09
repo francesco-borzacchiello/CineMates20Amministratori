@@ -2,11 +2,9 @@ package it.unina.ingSw.cineMates20.controller;
 
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import info.movito.themoviedbapi.TmdbApi;
-import info.movito.themoviedbapi.TmdbMovies;
-import info.movito.themoviedbapi.model.MovieDb;
 import it.unina.ingSw.cineMates20.model.ReportHttpRequests;
-import it.unina.ingSw.cineMates20.model.ReportMovieDB;
+import it.unina.ingSw.cineMates20.model.ReportUserDB;
+import it.unina.ingSw.cineMates20.model.UserDB;
 import it.unina.ingSw.cineMates20.utils.NameResources;
 import it.unina.ingSw.cineMates20.utils.Resources;
 import it.unina.ingSw.cineMates20.view.GridPaneGenerator;
@@ -20,13 +18,16 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.controlsfx.control.textfield.CustomTextField;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 import static java.util.stream.Collectors.toMap;
 
-public class ReportMoviesContainerController extends Controller{
+public class ReportUsersContainerController extends Controller{
 
     @FXML
     private VBox emptyDialogVBox;
@@ -40,11 +41,11 @@ public class ReportMoviesContainerController extends Controller{
     @FXML
     private ScrollPane containerScrollPane;
 
-    private Map<MovieDb, List<String>> sortedMoviesMapByTitles,
-                                       sortedMoviesMapByReportsNum;
+    private Map<UserDB, List<String>> sortedUsersMapByName,
+                                      sortedUsersMapByReportsNum;
 
-    private GridPane moviesByTitlesGridPane,
-                     moviesByReportsNumGridPane;
+    private GridPane usersByNameGridPane,
+                     usersByReportsNumGridPane;
 
     private boolean sortedByReportsNumber;
 
@@ -56,41 +57,44 @@ public class ReportMoviesContainerController extends Controller{
 
         searchBoxCustomTextField.textProperty().addListener((observable, oldValue, newValue) -> onEnter());
 
-        List<ReportMovieDB> reportedMoviesDB = new ReportHttpRequests().getAllReportedMovies();
-        if(reportedMoviesDB.size() == 0) {
+        List<ReportUserDB> reportedUsersDB = new ReportHttpRequests().getAllReportedUsers();
+        if(reportedUsersDB.size() == 0) {
             showEmptyReports();
             return;
         }
         else emptyDialogVBox.setManaged(false);
 
-        sortedMoviesMapByReportsNum = new LinkedHashMap<>(); //Preserva ordine di inserimento, utile per future rimozioni
+        sortedUsersMapByReportsNum = new LinkedHashMap<>(); //Preserva ordine di inserimento, utile per future rimozioni
 
-        MovieDb actualMovie;
-        TmdbMovies tmdbMovies = new TmdbApi(Resources.get(NameResources.TMDB_API_KEY)).getMovies();
-        sortedMoviesMapByTitles = new LinkedHashMap<>();
+        UserDB actualUser;
+        sortedUsersMapByName = new LinkedHashMap<>();
 
-        for(ReportMovieDB reportedMovieDB: reportedMoviesDB) {
-            actualMovie = tmdbMovies.getMovie(reportedMovieDB.getFKFilmSegnalato().intValue(), "it");
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+        String url = Resources.get(NameResources.DB_PATH) + "User/getById/{email}";
 
-            if(sortedMoviesMapByReportsNum.get(actualMovie) == null) {
+        for(ReportUserDB reportedUserDB: reportedUsersDB) {
+            actualUser = restTemplate.getForObject(url, UserDB.class, reportedUserDB.getFKUtenteSegnalato());
+
+            if(sortedUsersMapByReportsNum.get(actualUser) == null) {
                 ArrayList<String> list = new ArrayList<>();
-                list.add(reportedMovieDB.getFKUtenteSegnalatore());
-                sortedMoviesMapByReportsNum.put(actualMovie, list); //Inizialmente le mappe non sono ordinate
-                sortedMoviesMapByTitles.put(actualMovie, list);
+                list.add(reportedUserDB.getFKUtenteSegnalatore());
+                sortedUsersMapByReportsNum.put(actualUser, list); //Inizialmente le mappe non sono ordinate
+                sortedUsersMapByName.put(actualUser, list);
             }
             else {
-                sortedMoviesMapByReportsNum.get(actualMovie).add(reportedMovieDB.getFKUtenteSegnalatore());
-                sortedMoviesMapByTitles.get(actualMovie).add(reportedMovieDB.getFKUtenteSegnalatore());
+                sortedUsersMapByReportsNum.get(actualUser).add(reportedUserDB.getFKUtenteSegnalatore());
+                sortedUsersMapByName.get(actualUser).add(reportedUserDB.getFKUtenteSegnalatore());
             }
         }
 
-        initializeMapByTitles();
+        initializeMapByName();
         initializeMapByReportsNum();
 
-        moviesByReportsNumGridPane = GridPaneGenerator.generateMoviesGridPane(sortedMoviesMapByReportsNum);
+        usersByReportsNumGridPane = GridPaneGenerator.generateUsersGridPane(sortedUsersMapByReportsNum);
 
         //Di default viene mostrato ordinamento decrescente per numero di segnalazioni
-        containerScrollPane.setContent(moviesByReportsNumGridPane);
+        containerScrollPane.setContent(usersByReportsNumGridPane);
         sortedByReportsNumber = true;
     }
 
@@ -100,9 +104,9 @@ public class ReportMoviesContainerController extends Controller{
 
         if(query.equals("")) {
             if(sortedByReportsNumber)
-                containerScrollPane.setContent(moviesByReportsNumGridPane);
+                containerScrollPane.setContent(usersByReportsNumGridPane);
             else
-                containerScrollPane.setContent(moviesByTitlesGridPane);
+                containerScrollPane.setContent(usersByNameGridPane);
 
             if(emptyDialogVBox.isVisible())
                 hideEmptySearch();
@@ -114,14 +118,15 @@ public class ReportMoviesContainerController extends Controller{
 
         iconSort.setVisible(false);
 
-        Map<MovieDb, List<String>> queryMap = new LinkedHashMap<>();
+        Map<UserDB, List<String>> queryMap = new LinkedHashMap<>();
 
         /* Si sceglie di iterare su sortedMoviesMapByReportsNum tuttavia è indifferente
          * su quale delle due si itera, essendo i contenuti delle due mappe gli stessi */
-        for(Map.Entry<MovieDb, List<String>> entry: sortedMoviesMapByReportsNum.entrySet()) {
-            MovieDb actualMovie = entry.getKey();
-            if( (actualMovie.getTitle() != null && containsIgnoreCase(actualMovie.getTitle(), query) )
-               || ( containsIgnoreCase(actualMovie.getOriginalTitle(), query)) )
+        for(Map.Entry<UserDB, List<String>> entry: sortedUsersMapByReportsNum.entrySet()) {
+            UserDB actualUser = entry.getKey();
+            if(containsIgnoreCase(actualUser.getNome(), query)
+                || containsIgnoreCase(actualUser.getCognome(), query)
+                || containsIgnoreCase(actualUser.getUsername(), query))
                 queryMap.put(entry.getKey(), entry.getValue());
         }
 
@@ -129,7 +134,7 @@ public class ReportMoviesContainerController extends Controller{
             if(emptyDialogVBox.isVisible())
                 hideEmptySearch();
 
-            containerScrollPane.setContent(GridPaneGenerator.generateMoviesGridPane(queryMap));
+            containerScrollPane.setContent(GridPaneGenerator.generateUsersGridPane(queryMap));
         }
         else
             showEmptySearch();
@@ -202,21 +207,21 @@ public class ReportMoviesContainerController extends Controller{
 
         iconSort.setOnMouseClicked(mouseEvent -> {
             if(sortedByReportsNumber) {
-                if(moviesByTitlesGridPane == null)
-                    moviesByTitlesGridPane = GridPaneGenerator.generateMoviesGridPane(sortedMoviesMapByTitles);
-                containerScrollPane.setContent(moviesByTitlesGridPane);
+                if(usersByNameGridPane == null)
+                    usersByNameGridPane = GridPaneGenerator.generateUsersGridPane(sortedUsersMapByName);
+                containerScrollPane.setContent(usersByNameGridPane);
                 sortedByReportsNumber = false;
             }
             else {
-                containerScrollPane.setContent(moviesByReportsNumGridPane);
+                containerScrollPane.setContent(usersByReportsNumGridPane);
                 sortedByReportsNumber = true;
             }
         });
     }
 
-    //Metodo per ordinare i film in base alle segnalazioni
+    //Metodo per ordinare gli utenti in base alle segnalazioni
     private void initializeMapByReportsNum() {
-        sortedMoviesMapByReportsNum = sortedMoviesMapByReportsNum.entrySet().stream()
+        sortedUsersMapByReportsNum = sortedUsersMapByReportsNum.entrySet().stream()
                 .sorted(Comparator.comparingInt(e -> -e.getValue().size()))
                 .collect(toMap(
                         Map.Entry::getKey,
@@ -226,16 +231,11 @@ public class ReportMoviesContainerController extends Controller{
                 ));
     }
 
-    //Metodo per ordinare i film in base ai titoli
-    private void initializeMapByTitles() {
-        sortedMoviesMapByTitles = sortedMoviesMapByTitles.entrySet().stream()
-                .sorted((e1, e2) -> {
-                    MovieDb movie1 = e1.getKey(),
-                            movie2 = e2.getKey();
-                    if (movie1.getTitle() != null && movie2.getTitle() != null)
-                        return movie1.getTitle().compareTo(movie2.getTitle());
-                    return movie1.getOriginalTitle().compareTo(movie2.getOriginalTitle());
-                })
+    //Metodo per ordinare gli utenti in base al loro nome e cognome
+    private void initializeMapByName() {
+        sortedUsersMapByName = sortedUsersMapByName.entrySet().stream()
+                .sorted(Comparator.comparing((Map.Entry<UserDB, List<String>> e1) -> e1.getKey().getNome())
+                            .thenComparing((Map.Entry<UserDB, List<String>> e1) -> e1.getKey().getCognome()))
                 .collect(toMap(
                         Map.Entry::getKey,
                         Map.Entry::getValue,

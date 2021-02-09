@@ -5,13 +5,10 @@ import it.unina.ingSw.cineMates20.utils.NameResources;
 import it.unina.ingSw.cineMates20.utils.Resources;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 
@@ -32,7 +29,7 @@ public class ReportMovieItemController extends Controller {
     @Override
     protected void initialize() {}
 
-    public void start(MovieDb movie) {
+    public void start(MovieDb movie, int numSegnalazioni) {
         IMAGE_FIRST_PATH = Resources.get(NameResources.FIRST_PATH_IMAGE);
 
         Platform.runLater(()-> {
@@ -43,18 +40,18 @@ public class ReportMovieItemController extends Controller {
 
             if(movie.getPosterPath() != null)
                 new Thread(()-> {
-                    Image image = new Image(IMAGE_FIRST_PATH + movie.getPosterPath());
+                    Image image = new Image(IMAGE_FIRST_PATH + movie.getPosterPath(), 185, 278, false, false);
                     Platform.runLater(()-> movieImageView.setImage(image));
                 }).start();
 
             Platform.runLater(() -> {
                 Rectangle rectangle = new Rectangle(movieImageView.getFitWidth(), movieImageView.getFitHeight());
-                rectangle.setArcHeight(20);
-                rectangle.setArcWidth(20);
+                rectangle.setArcHeight(20.0);
+                rectangle.setArcWidth(20.0);
                 movieImageView.setClip(rectangle);
             });
 
-            reportsCountLabel.setText(reportsCountLabel.getText() + " 0");
+            reportsCountLabel.setText(reportsCountLabel.getText() + " " + numSegnalazioni);
 
             //TODO: listener movieHBox
         });

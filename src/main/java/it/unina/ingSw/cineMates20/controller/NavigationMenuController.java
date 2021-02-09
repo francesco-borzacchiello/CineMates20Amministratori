@@ -2,7 +2,6 @@ package it.unina.ingSw.cineMates20.controller;
 
 import it.unina.ingSw.cineMates20.model.S3Manager;
 import it.unina.ingSw.cineMates20.view.MessageDialog;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -45,25 +44,22 @@ public class NavigationMenuController extends Controller {
         //TODO:settare i restanti listener dei tasti attivi
         addEventListener();
 
-        new Thread(() -> {
-            InputStream profileImageInputStream = s3Manager.getProfilePictureInputStream("fran.borzacchiello@studenti.unina.it");
-            Image image;
-            if (profileImageInputStream != null)
-                image = new Image(profileImageInputStream);
-            else {
-                File file = new File("src/main/resources/it/unina/ingSw/cineMates20/CSS/image/profile_picture.png");
-                image = new Image(file.toURI().toString());
-            }
-            Platform.runLater(() -> {
-                profile_image.setImage(image);
-                profile_image.setClip(new Circle(profile_image.getFitWidth() / 2, profile_image.getFitHeight() / 2, 50));
-            });
-        }).start();
+        InputStream profileImageInputStream = s3Manager.getProfilePictureInputStream("fran.borzacchiello@studenti.unina.it");
+        Image image;
+        if (profileImageInputStream != null)
+            image = new Image(profileImageInputStream);
+        else {
+            File file = new File("src/main/resources/it/unina/ingSw/cineMates20/CSS/image/profile_picture.png");
+            image = new Image(file.toURI().toString());
+        }
+
+        profile_image.setImage(image);
+        profile_image.setClip(new Circle(profile_image.getFitWidth() / 2, profile_image.getFitHeight() / 2, 50));
     }
 
     private void addEventListener() {
         addEventListenerToLogoutButton();
-        addEventListenerForSetProfileImage();
+        addEventListenerToSetProfileImage();
     }
 
     private void addEventListenerToLogoutButton() {
@@ -71,17 +67,15 @@ public class NavigationMenuController extends Controller {
             Stage actualStage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
             actualStage.close();
             try {
-                //openLogin(actualStage);
                 openLogin();
             } catch (IOException e) {
-                //actualStage.close();
                 MessageDialog.error("Si è verificato un errore",
                         "Si è verificato un errore, riprova tra qualche minuto a riaprire l'applicativo!!");
             }
         });
     }
 
-    private void addEventListenerForSetProfileImage() {
+    private void addEventListenerToSetProfileImage() {
         profile_image.setOnMouseClicked(mouseEvent -> {
             Stage actualStage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
             File file = fileChooser.showOpenDialog(actualStage); //Blocca actualStage mentre fileChooser è aperto
@@ -92,12 +86,6 @@ public class NavigationMenuController extends Controller {
             }
         });
     }
-
-    /*private void openLogin(Stage actualStage) throws IOException {
-        LoginController loginController = new LoginController();
-        loginController.setStage(actualStage);
-        loginController.start();
-    }*/
 
     private void openLogin() throws IOException {
         new LoginController().start();

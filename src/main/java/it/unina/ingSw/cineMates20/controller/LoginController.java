@@ -1,5 +1,6 @@
 package it.unina.ingSw.cineMates20.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -42,14 +44,14 @@ public class LoginController extends Controller{
 
     private final LoginModel loginModel = new LoginModel();
 
-    /*public void setStage(Stage stage) {
-        loginStage = stage;
-    }*/
-
     public void start(Stage stage) throws IOException {
         loginStage = stage;
         loginStage.setScene(FXMLUtils.setRoot(Resources.get(NameResources.LOGIN_LAYOUT)));
         loginStage.setTitle("Login - CineMates20 Pannello Amministratori");
+
+        File file = new File("src/main/resources/it/unina/ingSw/cineMates20/CSS/image/logo.png");
+        stage.getIcons().add(new Image(file.toURI().toString()));
+
         loginStage.show();
 
         centerStage();
@@ -59,6 +61,10 @@ public class LoginController extends Controller{
         loginStage = new Stage();
         loginStage.setScene(FXMLUtils.setRoot(Resources.get(NameResources.LOGIN_LAYOUT)));
         loginStage.setTitle("Login - CineMates20 Pannello Amministratori");
+
+        File file = new File("src/main/resources/it/unina/ingSw/cineMates20/CSS/image/logo.png");
+        loginStage.getIcons().add(new Image(file.toURI().toString()));
+
         loginStage.show();
 
         centerStage();      //é importante che stia dopo lo show perchè usa le dimensioni dello stage
@@ -81,10 +87,8 @@ public class LoginController extends Controller{
         addEventListenerToEmailTextField();
         addEventListenerToPasswordField();
         addEventListenerToLoginButton();
-        addEventListenerForChangePassword();
+        addEventListenerToChangePassword();
     }
-
-
 
     private void addEventListenerToLoginButton(){
         loginButton.setOnAction(event -> {
@@ -122,9 +126,9 @@ public class LoginController extends Controller{
         });
     }
 
-    private void addEventListenerForChangePassword() {
+    private void addEventListenerToChangePassword() {
         resetPasswordHyperLink.setOnAction(event ->
-                MessageDialog.info("Reset password", "Rivolgersi ad un superiore per farsi resettare la password"));
+                MessageDialog.info("Reset password", "Per il recupero della password rivolgersi ad un amministratore."));
     }
 
     private void showError(boolean show, TextField textField) {

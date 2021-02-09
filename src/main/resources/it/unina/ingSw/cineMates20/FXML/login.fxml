@@ -1,39 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <VBox alignment="CENTER" minHeight="450.0" minWidth="800.0" spacing="20.0" styleClass="container" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unina.ingSw.cineMates20.controller.LoginController">
-   <children>
-      <Label styleClass="white_title" text="Login" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="35.0" />
-         </font>
-      </Label>
-      <TextField fx:id="emailTextField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="250.0" promptText="Indirizzo e-mail" styleClass="styleTextField" stylesheets="@../CSS/style.css" text="fran.borzacchiello@studenti.unina.it" />
-      <PasswordField fx:id="passwordField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="250.0" promptText="Password" styleClass="styleTextField" text="Francesco_Amministratore2021" />
-      <Button fx:id="loginButton" styleClass="styleButton" text="LOGIN" textFill="WHITE">
-         <padding>
-            <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
-         </padding>
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
-      <Hyperlink fx:id="resetPasswordHyperLink" focusTraversable="false" text="Password dimenticata?" textFill="WHITE">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Hyperlink>
-      <Label text="Per ottenere nuove credenziali di accesso, &#10;rivolgersi ad un superiore" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-   </children>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
+   <Label styleClass="white_title" text="Login" textFill="WHITE">
+      <font>
+         <Font name="System Bold" size="35.0" />
+      </font>
+   </Label>
+   <TextField fx:id="emailTextField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="250.0" promptText="Indirizzo e-mail" styleClass="styleTextField" stylesheets="@../CSS/style.css" text="fran.borzacchiello@studenti.unina.it" />
+   <PasswordField fx:id="passwordField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="250.0" promptText="Password" styleClass="styleTextField" text="Francesco_Amministratore2021" />
+   <Button fx:id="loginButton" text="LOGIN" textFill="WHITE">
+      <padding>
+         <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+      </padding>
+      <font>
+         <Font size="14.0" />
+      </font>
+      <styleClass>
+         <String fx:value="styleButton" />
+         <String fx:value="styleButtonHover" />
+      </styleClass>
+   </Button>
+   <Hyperlink fx:id="resetPasswordHyperLink" focusTraversable="false" text="Password dimenticata?" textFill="WHITE">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Hyperlink>
+   <Label text="Per ottenere nuove credenziali di accesso, &#10;rivolgersi ad un superiore" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
 </VBox>

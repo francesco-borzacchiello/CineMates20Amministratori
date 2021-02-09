@@ -8,7 +8,8 @@
     <entry key="LOGIN_LAYOUT">login</entry>
     <entry key="HOME_LAYOUT">home</entry>
     <entry key="NAVIGATION_MENU_LAYOUT">navigation_menu</entry>
-    <entry key="REPORT_ITEM_LAYOUT">report_movie_item</entry>
+    <entry key="REPORT_MOVIE_ITEM_LAYOUT">report_movie_item</entry>
+    <entry key="REPORT_USER_ITEM_LAYOUT">report_user_item</entry>
 
     <!-- Path DB interno -->
     <entry key="DB_PATH">http://databasecinemates20-env.eba-itkikzsk.eu-west-3.elasticbeanstalk.com/ServerCineMates20/</entry>

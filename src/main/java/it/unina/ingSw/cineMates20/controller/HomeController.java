@@ -8,9 +8,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class HomeController extends Controller{
@@ -41,24 +43,19 @@ public class HomeController extends Controller{
 
     }
 
-    /*public void setStage(Stage stage) {
-        homeStage = stage;
-    }*/
-
     public void start() throws IOException {
         homeStage = new Stage();
         homeStage.setScene(FXMLUtils.setRoot(Resources.get(NameResources.HOME_LAYOUT)));
         homeStage.setMaximized(true);
         homeStage.setTitle("Home - CineMates20 Pannello Amministratori");
 
-        homeStage.show();
+        File file = new File("src/main/resources/it/unina/ingSw/cineMates20/CSS/image/logo.png");
+        homeStage.getIcons().add(new Image(file.toURI().toString()));
 
-        /*homeStage.setScene(FXMLUtils.setRoot(Resources.get(NameResources.HOME_LAYOUT)));
-        //homeStage.setTitle("Login - CineMates20 Pannello Amministratori");
-        homeStage.show();*/
+        homeStage.show();
     }
 
-    public void setHome(Node node) {
+    public void replaceHomeNode(Node node) {
         container.getChildren().remove(1);
         container.getChildren().add(node);
     }
