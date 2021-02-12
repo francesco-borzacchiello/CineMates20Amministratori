@@ -74,7 +74,7 @@ public class ReportMoviesContainerDetailsController extends Controller{
     private static MovieDb reportedMovie;
     private static List<UserDB> reporters;
 
-    private static List<ReportMovieDB> userMovieReports;
+    private static List<ReportMovieDB> userMovieReports; //Segnalazioni di questo film dello stesso utente
 
     private static ReportMoviesContainerController reportMoviesContainerController;
     private static ManagedReportsMoviesContainerController managedReportsMoviesContainerController;
@@ -86,18 +86,17 @@ public class ReportMoviesContainerDetailsController extends Controller{
     @Override
     protected void initialize() {
         initializeIcons();
-        setUpIconsListener();
+        setUpIconListeners();
 
         initializeReportedMovie();
 
         //Raggruppamento segnalazioni per utenti
         reporters.sort(Comparator.comparing(UserDB::getNome)
-                .thenComparing(UserDB::getCognome)
-                .thenComparing(UserDB::getUsername)
-                .thenComparing(UserDB::getEmail));
+                      .thenComparing(UserDB::getCognome)
+                      .thenComparing(UserDB::getUsername)
+                      .thenComparing(UserDB::getEmail));
 
         initializeReportersGridPane();
-
         initializeVBoxes();
 
         reportHttpRequests = new ReportHttpRequests();
@@ -119,7 +118,6 @@ public class ReportMoviesContainerDetailsController extends Controller{
             listeners.add(getEventListenerForReporterUser(reporter, userMovieReports.remove(0)));
         }
 
-        //Necessario per comunicare future rimozioni dalla lista di segnalazioni, se actualReportTypeIsPending = true
         GridPane reportersGridPane = GridPaneGenerator.generateMovieReportersUsersGridPane(reporters, listeners);
 
         reportersContainerScrollPane.setContent(reportersGridPane);
@@ -219,8 +217,6 @@ public class ReportMoviesContainerDetailsController extends Controller{
     private void deleteSelectedUserFromReportersGridPane(UserDB reporter) {
         if(actualReportTypeIsPending && reportMoviesContainerController != null)
             reportMoviesContainerController.updateReportsLayout();
-        else if(!actualReportTypeIsPending && managedReportsMoviesContainerController != null)
-            managedReportsMoviesContainerController.updateReportsLayout();
 
         reporters.removeAll(Collections.singleton(reporter));
 
@@ -323,7 +319,7 @@ public class ReportMoviesContainerDetailsController extends Controller{
     }
 
     private void initializeTextFlows() {
-        TmdbMovies tmdbMovies = new TmdbApi(Resources.get(NameResources.TMDB_API_KEY)).getMovies();
+        TmdbMovies tmdbMovies = new TmdbApi(Resources.getTmdbApiKey()).getMovies();
 
         Text dataDiUscita = new Text(getEuropeanFormatMovieReleaseDate(reportedMovie, tmdbMovies));
         dataDiUscita.setStyle("-fx-font-size: 15.0");
@@ -452,7 +448,7 @@ public class ReportMoviesContainerDetailsController extends Controller{
         return certification;
     }
 
-    private void setUpIconsListener() {
+    private void setUpIconListeners() {
         iconBack.setOnMouseClicked(mouseEvent -> {
             if(actualReportTypeIsPending)
                 reportMoviesContainerController.showAgain();

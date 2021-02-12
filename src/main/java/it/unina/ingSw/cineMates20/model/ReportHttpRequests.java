@@ -16,9 +16,10 @@ import java.util.Map;
 public class ReportHttpRequests {
 
     private final RestTemplate restTemplate;
-    private static final String DB_PATH = Resources.get(NameResources.DB_PATH),
+    private static final String DB_PATH = Resources.getDbPath(),
                                 REPORT_PATH = Resources.get(NameResources.REPORT_PATH),
-                                UPDATE_MOVIE_REPORT_PATH = Resources.get(NameResources.UPDATE_MOVIE_REPORT_PATH);
+                                UPDATE_MOVIE_REPORT_PATH = Resources.get(NameResources.UPDATE_MOVIE_REPORT_PATH),
+                                UPDATE_USER_REPORT_PATH = Resources.get(NameResources.UPDATE_USER_REPORT_PATH);
 
     public ReportHttpRequests() {
         restTemplate = new RestTemplate();
@@ -111,6 +112,26 @@ public class ReportHttpRequests {
         HashMap<String, ReportMovieDB> map = new HashMap<>();
         map.put(emailHash, report);
         HttpEntity<Map<String, ReportMovieDB>> requestEntity = new HttpEntity<>(map, headers);
+
+        try {
+            ResponseEntity<Boolean> responseEntity = restTemplate.postForEntity(url, requestEntity, Boolean.class);
+
+            if(responseEntity.getBody() != null && responseEntity.getStatusCode() == HttpStatus.OK)
+                return responseEntity.getBody();
+        }catch(HttpClientErrorException ignore) {}
+
+        return false;
+    }
+
+    public boolean adminUpdateUserReport(ReportUserDB report, String emailHash) {
+        String url = DB_PATH + REPORT_PATH + UPDATE_USER_REPORT_PATH;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HashMap<String, ReportUserDB> map = new HashMap<>();
+        map.put(emailHash, report);
+        HttpEntity<Map<String, ReportUserDB>> requestEntity = new HttpEntity<>(map, headers);
 
         try {
             ResponseEntity<Boolean> responseEntity = restTemplate.postForEntity(url, requestEntity, Boolean.class);

@@ -7,13 +7,15 @@ import java.util.Properties;
 
 public class Resources {
 
-    private static final Properties properties = new Properties();
+    private static final Properties properties = new Properties(),
+                                    secretKeysProperties = new Properties();
 
     private static final String NAME_RESOURCES_FIlE = "resources.xml";
 
     static {
         try {
             properties.loadFromXML(Resources.class.getClassLoader().getResourceAsStream(NAME_RESOURCES_FIlE));
+            secretKeysProperties.load(new FileInputStream("secretKeys.properties"));
         } catch (Exception e) {
             e.getStackTrace();
         }
@@ -55,4 +57,25 @@ public class Resources {
         }
         return null;
     }
+
+    public static String getAwsAccessKey() {
+        return secretKeysProperties.getProperty("AWS_ACCESS_KEY");
+    }
+
+    public static String getAwsSecretKey() {
+        return secretKeysProperties.getProperty("AWS_SECRET_KEY");
+    }
+
+    public static String getS3BucketName() {
+        return secretKeysProperties.getProperty("S3_BUCKET_NAME");
+    }
+
+    public static String getDbPath() {
+        return secretKeysProperties.getProperty("DB_PATH");
+    }
+
+    public static String getTmdbApiKey() {
+        return secretKeysProperties.getProperty("TMDB_API_KEY");
+    }
+
 }

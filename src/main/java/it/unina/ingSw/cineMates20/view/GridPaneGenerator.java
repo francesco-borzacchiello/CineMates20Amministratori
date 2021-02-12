@@ -5,6 +5,7 @@ import it.unina.ingSw.cineMates20.App;
 import it.unina.ingSw.cineMates20.controller.ReportMovieItemController;
 import it.unina.ingSw.cineMates20.controller.ReportUserItemController;
 import it.unina.ingSw.cineMates20.model.ReportMovieDB;
+import it.unina.ingSw.cineMates20.model.ReportUserDB;
 import it.unina.ingSw.cineMates20.model.UserDB;
 import it.unina.ingSw.cineMates20.utils.NameResources;
 import it.unina.ingSw.cineMates20.utils.Resources;
@@ -43,7 +44,7 @@ public class GridPaneGenerator {
         return gridPane;
     }
 
-    public static GridPane generateUsersGridPane(Map<UserDB, List<String>> reportedUsersMap, List<Runnable> runnables) {
+    public static GridPane generateUsersGridPane(Map<UserDB, List<ReportUserDB>> reportedUsersMap, List<Runnable> runnables) {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);
         gridPane.setVgap(10);

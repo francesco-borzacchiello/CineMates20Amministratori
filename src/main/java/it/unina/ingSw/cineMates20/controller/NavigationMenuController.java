@@ -98,7 +98,7 @@ public class NavigationMenuController extends Controller {
         headers.setContentType(MediaType.TEXT_PLAIN);
 
         HttpEntity<String> requestEntity = new HttpEntity<>(emailHash, headers);
-        String url = Resources.get(NameResources.DB_PATH) + Resources.get(NameResources.ADMIN_PATH) + Resources.get(NameResources.GET_BASIC_ADMIN_INFO_PATH);
+        String url = Resources.getDbPath() + Resources.get(NameResources.ADMIN_PATH) + Resources.get(NameResources.GET_BASIC_ADMIN_INFO_PATH);
         UserDB basicAdminInfo = null;
         try {
             ResponseEntity<UserDB> responseEntity = restTemplate.postForEntity(url, requestEntity, UserDB.class);
@@ -164,14 +164,19 @@ public class NavigationMenuController extends Controller {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //HomeController.getHomeControllerInstance().startManagedReports();
         });
     }
 
     private void addEventListenerToInformationButton() {
         informationHBox.setOnMouseClicked(mouseEvent -> {
             setInformationActive();
-            //TODO: continuare...
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("FXML/information.fxml"));
+            try {
+                Node information = loader.load();
+                homeController.replaceHomeNode(information);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 

@@ -22,7 +22,7 @@ public class LoginModel {
         restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
 
-        DB_PATH = Resources.get(NameResources.DB_PATH);
+        DB_PATH = Resources.getDbPath();
         ADMIN_PATH = Resources.get(NameResources.ADMIN_PATH);
         GET_PSW_HASH_PATH = Resources.get(NameResources.GET_PSW_HASH_PATH);
         EMAIL_ALREADY_EXISTS_PATH = Resources.get(NameResources.EMAIL_ALREADY_EXISTS_PATH);

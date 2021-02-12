@@ -62,7 +62,7 @@ public class ReportMoviesContainerController extends Controller{
     public ReportMoviesContainerController() {
         restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-        getUserUrl = Resources.get(NameResources.DB_PATH) + "User/getById/{email}";
+        getUserUrl = Resources.getDbPath() + "User/getById/{email}";
     }
 
     @FXML
@@ -80,10 +80,10 @@ public class ReportMoviesContainerController extends Controller{
         }
         else emptyDialogVBox.setManaged(false);
 
-        sortedMoviesMapByReportsNum = new LinkedHashMap<>(); //Preserva ordine di inserimento, utile per future rimozioni
+        sortedMoviesMapByReportsNum = new LinkedHashMap<>();
 
         MovieDb actualMovie;
-        TmdbMovies tmdbMovies = new TmdbApi(Resources.get(NameResources.TMDB_API_KEY)).getMovies();
+        TmdbMovies tmdbMovies = new TmdbApi(Resources.getTmdbApiKey()).getMovies();
         sortedMoviesMapByTitles = new LinkedHashMap<>();
 
         for(ReportMovieDB reportedMovieDB: reportedMoviesDB) {
@@ -121,12 +121,12 @@ public class ReportMoviesContainerController extends Controller{
         sortedByReportsNumber = true;
     }
 
-    private Runnable getEventListenerForSelectedMovie(MovieDb movie, List<ReportMovieDB> reporters) {
+    private Runnable getEventListenerForSelectedMovie(MovieDb movie, List<ReportMovieDB> reports) {
         return ()-> {
             ArrayList<UserDB> usersReporters = new ArrayList<>();
 
-            for(ReportMovieDB reporter: reporters) {
-                String reporterEmail = reporter.getFKUtenteSegnalatore();
+            for(ReportMovieDB report: reports) {
+                String reporterEmail = report.getFKUtenteSegnalatore();
                 usersReporters.add(restTemplate.getForObject(getUserUrl, UserDB.class, reporterEmail));
             }
 

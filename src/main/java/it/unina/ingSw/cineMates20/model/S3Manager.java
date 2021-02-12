@@ -7,9 +7,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.S3Object;
-import it.unina.ingSw.cineMates20.utils.NameResources;
 import it.unina.ingSw.cineMates20.utils.Resources;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -23,9 +21,9 @@ public class S3Manager {
     private final String BUCKET_NAME;
 
     public S3Manager() {
-        String accessKey = Resources.get(NameResources.IAM_ACCESS_KEY);
-        String secretKey = Resources.get(NameResources.IAM_SECRET_KEY);
-        BUCKET_NAME = Resources.get(NameResources.S3_BUCKET_NAME);
+        String accessKey = Resources.getAwsAccessKey();
+        String secretKey = Resources.getAwsSecretKey();
+        BUCKET_NAME = Resources.getS3BucketName();
 
         AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
 

@@ -5,7 +5,6 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import it.unina.ingSw.cineMates20.model.ReportHttpRequests;
 import it.unina.ingSw.cineMates20.model.ReportUserDB;
 import it.unina.ingSw.cineMates20.model.UserDB;
-import it.unina.ingSw.cineMates20.utils.NameResources;
 import it.unina.ingSw.cineMates20.utils.Resources;
 import it.unina.ingSw.cineMates20.view.GridPaneGenerator;
 import javafx.fxml.FXML;
@@ -41,8 +40,8 @@ public class ReportUsersContainerController extends Controller{
     @FXML
     private ScrollPane containerScrollPane;
 
-    private Map<UserDB, List<String>> sortedUsersMapByName,
-                                      sortedUsersMapByReportsNum;
+    private Map<UserDB, List<ReportUserDB>> sortedUsersMapByName,
+                                            sortedUsersMapByReportsNum;
 
     private GridPane usersByNameGridPane,
                      usersByReportsNumGridPane;
@@ -52,16 +51,15 @@ public class ReportUsersContainerController extends Controller{
     private boolean sortedByReportsNumber;
 
     private HomeController homeController;
+    private Node reportUserContainerNode;
 
     private final RestTemplate restTemplate;
     private final String getUserUrl;
 
-    private Node reportUserContainerNode;
-
     public ReportUsersContainerController() {
         restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-        getUserUrl = Resources.get(NameResources.DB_PATH) + "User/getById/{email}";
+        getUserUrl = Resources.getDbPath() + "User/getById/{email}";
     }
 
     @FXML
@@ -79,7 +77,7 @@ public class ReportUsersContainerController extends Controller{
         }
         else emptyDialogVBox.setManaged(false);
 
-        sortedUsersMapByReportsNum = new LinkedHashMap<>(); //Preserva ordine di inserimento, utile per future rimozioni
+        sortedUsersMapByReportsNum = new LinkedHashMap<>();
 
         UserDB actualUser;
         sortedUsersMapByName = new LinkedHashMap<>();
@@ -88,15 +86,15 @@ public class ReportUsersContainerController extends Controller{
             actualUser = restTemplate.getForObject(getUserUrl, UserDB.class, reportedUserDB.getFKUtenteSegnalato());
 
             if(sortedUsersMapByReportsNum.get(actualUser) == null) {
-                ArrayList<String> list1 = new ArrayList<>(), list2 = new ArrayList<>();
-                list1.add(reportedUserDB.getFKUtenteSegnalatore());
-                list2.add(reportedUserDB.getFKUtenteSegnalatore());
+                ArrayList<ReportUserDB> list1 = new ArrayList<>(), list2 = new ArrayList<>();
+                list1.add(reportedUserDB);
+                list2.add(reportedUserDB);
                 sortedUsersMapByReportsNum.put(actualUser, list1); //Inizialmente le mappe non sono ordinate
                 sortedUsersMapByName.put(actualUser, list2);
             }
             else {
-                sortedUsersMapByReportsNum.get(actualUser).add(reportedUserDB.getFKUtenteSegnalatore());
-                sortedUsersMapByName.get(actualUser).add(reportedUserDB.getFKUtenteSegnalatore());
+                sortedUsersMapByReportsNum.get(actualUser).add(reportedUserDB);
+                sortedUsersMapByName.get(actualUser).add(reportedUserDB);
             }
         }
 
@@ -106,10 +104,10 @@ public class ReportUsersContainerController extends Controller{
         usersByNameRunnables = new ArrayList<>();
         ArrayList<Runnable> usersByReportsNumRunnables = new ArrayList<>();
 
-        for(Map.Entry<UserDB, List<String>> entry: sortedUsersMapByReportsNum.entrySet())
+        for(Map.Entry<UserDB, List<ReportUserDB>> entry: sortedUsersMapByReportsNum.entrySet())
             usersByReportsNumRunnables.add(getEventListenerForSelectedUser(entry.getKey(), entry.getValue()));
 
-        for(Map.Entry<UserDB, List<String>> entry: sortedUsersMapByName.entrySet())
+        for(Map.Entry<UserDB, List<ReportUserDB>> entry: sortedUsersMapByName.entrySet())
             usersByNameRunnables.add(getEventListenerForSelectedUser(entry.getKey(), entry.getValue()));
 
         usersByReportsNumGridPane = GridPaneGenerator.generateUsersGridPane(sortedUsersMapByReportsNum, usersByReportsNumRunnables);
@@ -119,17 +117,30 @@ public class ReportUsersContainerController extends Controller{
         sortedByReportsNumber = true;
     }
 
-    private Runnable getEventListenerForSelectedUser(UserDB user, List<String> reporters) {
+    private Runnable getEventListenerForSelectedUser(UserDB user, List<ReportUserDB> reports) {
         return ()-> {
             ArrayList<UserDB> usersReporters = new ArrayList<>();
 
-            for(String reporterEmail: reporters)
+            for(ReportUserDB report: reports) {
+                String reporterEmail = report.getFKUtenteSegnalatore();
                 usersReporters.add(restTemplate.getForObject(getUserUrl, UserDB.class, reporterEmail));
+            }
 
             try {
                 new ReportUserContainerDetailsController().startPendingReports(user, usersReporters, homeController, this);
             }catch(IOException ignore) {}
         };
+    }
+
+    public List<ReportUserDB> getUserReportedUsers(UserDB reportedUser, String userEmail) {
+        List<ReportUserDB> userMovieReports = new ArrayList<>();
+
+        //Qualunque delle due mappe va bene
+        for(ReportUserDB reportUserDB: sortedUsersMapByReportsNum.get(reportedUser))
+            if(reportUserDB.getFKUtenteSegnalato().equals(reportedUser.getEmail()) && reportUserDB.getFKUtenteSegnalatore().equals(userEmail))
+                userMovieReports.add(reportUserDB);
+
+        return userMovieReports;
     }
 
     @FXML
@@ -152,12 +163,12 @@ public class ReportUsersContainerController extends Controller{
 
         iconSort.setVisible(false);
 
-        Map<UserDB, List<String>> queryMap = new LinkedHashMap<>();
+        Map<UserDB, List<ReportUserDB>> queryMap = new LinkedHashMap<>();
         ArrayList<Runnable> runnables = new ArrayList<>();
 
         /* Si sceglie di iterare su sortedMoviesMapByReportsNum tuttavia è indifferente
          * su quale delle due si itera, essendo i contenuti delle due mappe gli stessi */
-        for(Map.Entry<UserDB, List<String>> entry: sortedUsersMapByReportsNum.entrySet()) {
+        for(Map.Entry<UserDB, List<ReportUserDB>> entry: sortedUsersMapByReportsNum.entrySet()) {
             UserDB actualUser = entry.getKey();
             if(containsIgnoreCase(actualUser.getNome(), query)
                 || containsIgnoreCase(actualUser.getCognome(), query)
@@ -272,8 +283,8 @@ public class ReportUsersContainerController extends Controller{
     //Metodo per ordinare gli utenti in base al loro nome e cognome
     private void initializeMapByName() {
         sortedUsersMapByName = sortedUsersMapByName.entrySet().stream()
-                .sorted(Comparator.comparing((Map.Entry<UserDB, List<String>> e1) -> e1.getKey().getNome())
-                            .thenComparing((Map.Entry<UserDB, List<String>> e1) -> e1.getKey().getCognome()))
+                .sorted(Comparator.comparing((Map.Entry<UserDB, List<ReportUserDB>> e1) -> e1.getKey().getNome())
+                            .thenComparing((Map.Entry<UserDB, List<ReportUserDB>> e1) -> e1.getKey().getCognome()))
                 .collect(toMap(
                         Map.Entry::getKey,
                         Map.Entry::getValue,
@@ -304,5 +315,9 @@ public class ReportUsersContainerController extends Controller{
 
     public void setReportUsersContainerNode(Node reportUserContainerNode) {
         this.reportUserContainerNode = reportUserContainerNode;
+    }
+
+    public void updateReportsLayout() {
+        new Thread(this::initialize).start();
     }
 }

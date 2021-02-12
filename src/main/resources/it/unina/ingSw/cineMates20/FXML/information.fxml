@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" styleClass="container" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <ImageView fitHeight="180.0" fitWidth="500.0" layoutX="271.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" styleClass="university_logo" />
+   <Label layoutX="337.0" layoutY="181.0" styleClass="information_title" text="CineMates20">
+      <font>
+         <Font name="System Bold Italic" size="24.0" />
+      </font>
+      <VBox.margin>
+         <Insets top="20.0" />
+      </VBox.margin></Label>
+   <Label layoutX="338.0" layoutY="207.0" styleClass="information_text" text="Sviluppatori:">
+      <VBox.margin>
+         <Insets top="30.0" />
+      </VBox.margin>
+      <font>
+         <Font name="System Bold Italic" size="12.0" />
+      </font></Label>
+   <Label layoutX="293.0" layoutY="233.0" styleClass="information_text" text="Carmine Grimaldi N86002551">
+      <font>
+         <Font name="System Bold Italic" size="12.0" />
+      </font></Label>
+   <Label layoutX="275.0" layoutY="251.0" styleClass="information_text" text="Francesco Borzacchiello N86002541">
+      <font>
+         <Font name="System Bold Italic" size="12.0" />
+      </font></Label>
+   <Label layoutX="348.0" layoutY="277.0" styleClass="information_text" text="Contatti:">
+      <VBox.margin>
+         <Insets top="30.0" />
+      </VBox.margin>
+      <font>
+         <Font name="System Bold Italic" size="12.0" />
+      </font></Label>
+   <Label layoutX="278.0" layoutY="295.0" styleClass="information_text" text="carmine.grimaldi@studenti.unina.it">
+      <font>
+         <Font name="System Bold Italic" size="12.0" />
+      </font></Label>
+   <Label layoutX="276.0" layoutY="313.0" styleClass="information_text" text="fran.borzacchiello@studenti.unina.it">
+      <font>
+         <Font name="System Bold Italic" size="12.0" />
+      </font></Label>
+   <padding>
+      <Insets left="300.0" right="300.0" />
+   </padding>
+</VBox>

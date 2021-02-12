@@ -3,12 +3,8 @@ package it.unina.ingSw.cineMates20;
 import it.unina.ingSw.cineMates20.controller.HomeController;
 import it.unina.ingSw.cineMates20.controller.LoginController;
 import it.unina.ingSw.cineMates20.model.LoginModel;
-import it.unina.ingSw.cineMates20.utils.NameResources;
 import it.unina.ingSw.cineMates20.utils.Resources;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 

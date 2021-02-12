@@ -4,7 +4,6 @@
 }
 
 .styleTextField {
-    /*-fx-text-inner-color: white;*/
     -fx-background-color: transparent;
     -fx-border: 0 0 2px 0;
     -fx-padding: 0 0 0.5em 0;
@@ -236,4 +235,24 @@
 
 .oscuraButton:hover {
     -fx-background-color: black;
+}
+
+.university_logo {
+    -fx-image: url("image/logo_federico_secondo.png");
+}
+
+.information_title {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 3.5em;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 0 0.5em;
+    -fx-font-style: italic;
+}
+
+.information_text {
+    -fx-text-fill: white;
+    -fx-font-size: 2em;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 0 0.5em;
+    -fx-font-style: italic;
 }
