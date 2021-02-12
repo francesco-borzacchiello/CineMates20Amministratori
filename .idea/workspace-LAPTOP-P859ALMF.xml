@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8ccd0c1f-d74c-478f-b8a2-c0519adfaf2b" name="Default Changelist" comment="Aggiunta schermata segnalazioni pendenti utenti. Aggiunte funzionalità ricerca utenti e film nelle relative schermate di segnalazioni pendenti. Aggiunto logo applicativo.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/controller/ReportMoviesContainerDetailsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/controller/ReportUserContainerDetailsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/it/unina/ingSw/cineMates20/CSS/image/not_found_movie_description.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/it/unina/ingSw/cineMates20/FXML/report_movies_container_details.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/it/unina/ingSw/cineMates20/FXML/report_users_container_details.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/controller/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/controller/ManagedReportsMoviesContainerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/controller/ManagedReportsMoviesContainerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/controller/ManegedReportUsersContainerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/controller/ManagedReportUsersContainerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/controller/ReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/controller/ReportController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/controller/ReportMovieItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/controller/ReportMovieItemController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/controller/ReportMoviesContainerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/controller/ReportMoviesContainerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/controller/ReportUserItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/controller/ReportUserItemController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/controller/ReportUsersContainerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/controller/ReportUsersContainerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/model/LoginModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/model/LoginModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/utils/NameResources.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/utils/NameResources.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/view/GridPaneGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/view/GridPaneGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/it/unina/ingSw/cineMates20/FXML/managed_report_users_container.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/it/unina/ingSw/cineMates20/FXML/managed_report_users_container.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/resources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/resources.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="package-info" />
+        <option value="Class" />
+        <option value="FxmlFile" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/resources/it/unina/ingSw/cineMates20/FXML/report_movies_container.fxml" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProjectId" id="1o0iBioFWGwAGDr2SGOSsgvi9Ch" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/it/unina/ingSw/cineMates20/CSS/image" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.43563217" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Carmine\IdeaProjects\CineMatesAmministratoriLS\src\main\resources\it\unina\ingSw\cineMates20\CSS\image" />
+      <recent name="C:\Users\Carmine\IdeaProjects\CineMatesAmministratoriLS\src\main\resources\it\unina\ingSw\cineMates20\FXML" />
+      <recent name="C:\Users\fborz\IdeaProjects\Desktop\src\main\resources\it\unina\ingSw\cineMates20\FXML" />
+      <recent name="C:\Users\Carmine\Università di Napoli Federico II\FRANCESCO BORZACCHIELLO - CineMates20\Implementazione\CineMates20Amministratori\src\main\resources\it\unina\ingSw\cineMates20\CSS\image" />
+      <recent name="C:\Users\Carmine\Università di Napoli Federico II\FRANCESCO BORZACCHIELLO - CineMates20\Implementazione\CineMates20Amministratori\src\main\resources\it\unina\ingSw\cineMates20\CSS\image\icon\pending_report" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Carmine\IdeaProjects\CineMatesAmministratoriLS\src\main\resources\it\unina\ingSw\cineMates20\CSS\image" />
+      <recent name="C:\Users\fborz\IdeaProjects\Desktop\src\main\resources\it\unina\ingSw\cineMates20\CSS\image\icon\" />
+      <recent name="C:\Users\fborz\IdeaProjects\Desktop\src\main\resources\it\unina\ingSw\cineMates20\CSS\image\icon\navigation_menu" />
+      <recent name="C:\Users\Carmine\Università di Napoli Federico II\FRANCESCO BORZACCHIELLO - CineMates20\Implementazione\CineMates20Amministratori\src\main\java\it\unina\ingSw\cineMates20" />
+      <recent name="C:\Users\fborz\IdeaProjects\Desktop\src\main\resources\it\unina\ingSw\cineMates20\CSS\image\icon" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="it.unina.ingSw.cineMates20.controller" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="CineMates20Amministratori" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="15" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="it.unina.ingSw.cineMates20.App" />
+      <module name="Desktop" />
+      <shortenClasspath name="MANIFEST" />
+      <option name="VM_PARAMETERS" value="--module-path C:\Users\fborz\.m2\repository\org\javafx-sdk-15.0.1\lib --add-modules=javafx.base,javafx.controls,javafx.fxml,javafx.graphics,javafx.media" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="15" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <module name="CineMates20Amministratori" />
+      <shortenClasspath name="MANIFEST" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8ccd0c1f-d74c-478f-b8a2-c0519adfaf2b" name="Default Changelist" comment="" />
+      <created>1612429774545</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1612429774545</updated>
+      <workItem from="1612429775935" duration="521000" />
+      <workItem from="1612430428281" duration="5774000" />
+      <workItem from="1612452245613" duration="8326000" />
+      <workItem from="1612460694322" duration="1278000" />
+      <workItem from="1612462136680" duration="1235000" />
+      <workItem from="1612463419633" duration="3172000" />
+      <workItem from="1612466666809" duration="466000" />
+      <workItem from="1612471911743" duration="7495000" />
+      <workItem from="1612480741510" duration="163000" />
+      <workItem from="1612521040478" duration="3885000" />
+      <workItem from="1612524981420" duration="1222000" />
+      <workItem from="1612526247398" duration="11803000" />
+      <workItem from="1612545421018" duration="148000" />
+      <workItem from="1612554445069" duration="2344000" />
+      <workItem from="1612556866282" duration="49000" />
+      <workItem from="1612558782775" duration="284000" />
+      <workItem from="1612559872235" duration="2319000" />
+      <workItem from="1612562293439" duration="4264000" />
+      <workItem from="1612568294370" duration="6402000" />
+      <workItem from="1612600144607" duration="180000" />
+      <workItem from="1612600465406" duration="101000" />
+      <workItem from="1612602989196" duration="697000" />
+      <workItem from="1612603905860" duration="1974000" />
+      <workItem from="1612605996354" duration="22916000" />
+      <workItem from="1612630955070" duration="252000" />
+      <workItem from="1612631265898" duration="7481000" />
+      <workItem from="1612645440176" duration="4782000" />
+      <workItem from="1612650336067" duration="275000" />
+      <workItem from="1612650649599" duration="293000" />
+      <workItem from="1612651059259" duration="773000" />
+      <workItem from="1612652283200" duration="168000" />
+      <workItem from="1612652477867" duration="39000" />
+      <workItem from="1612688074121" duration="128000" />
+      <workItem from="1612691867764" duration="3295000" />
+      <workItem from="1612695233095" duration="3704000" />
+      <workItem from="1612706923534" duration="2346000" />
+      <workItem from="1612713595854" duration="9093000" />
+      <workItem from="1612724558734" duration="927000" />
+      <workItem from="1612783788769" duration="9482000" />
+      <workItem from="1612798380145" duration="10840000" />
+      <workItem from="1612822866162" duration="8617000" />
+      <workItem from="1612876688116" duration="12230000" />
+      <workItem from="1612889031018" duration="8747000" />
+      <workItem from="1612898767142" duration="586000" />
+      <workItem from="1612908012237" duration="738000" />
+      <workItem from="1612910267281" duration="8262000" />
+      <workItem from="1612963867380" duration="12665000" />
+      <workItem from="1612977078153" duration="2325000" />
+    </task>
+    <task id="LOCAL-00001" summary="Aggiunta la classe DialogMessage, per mostrare i messaggi popup. &#10;Aggiunta la classe Resources, per gestire le risorse del file xml, a cui è associato un enumeration che contiene le chiavi per accedere ai valori.">
+      <created>1612430271795</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1612430271795</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Aggiunte più scene in un solo stage, per poter navigare nel navigation menù.&#10;Progettato il layout per il navigation menu.">
+      <created>1612467119554</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1612467119554</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Configurato Aws S3 per il caricamento delle foto e TMDBAPI per le informazioni dei film. Progettato layout home per le segnalazioni.">
+      <created>1612607304521</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1612607304521</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Aggiunta la schermata che mostra i film segnanalati [fittizi] (con scrollpane).">
+      <created>1612638818248</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1612638818249</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Aggiunta schermata segnalazioni pendenti utenti. Aggiunte funzionalità ricerca utenti e film nelle relative schermate di segnalazioni pendenti. Aggiunto logo applicativo.">
+      <created>1612831350326</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1612831350326</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Aggiunta la visualizzazione delle segnalazioni gestite dei film e degli utenti, con annesso model ed fxml">
+      <created>1612899311367</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1612899311367</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Aggiunta la classe DialogMessage, per mostrare i messaggi popup. &#10;Aggiunta la classe Resources, per gestire le risorse del file xml, a cui è associato un enumeration che contiene le chiavi per accedere ai valori." />
+    <MESSAGE value="Aggiunte più scene in un solo stage, per poter navigare nel navigation menù.&#10;Progettato il layout per il navigation menu." />
+    <MESSAGE value="Configurato Aws S3 per il caricamento delle foto e TMDBAPI per le informazioni dei film. Progettato layout home per le segnalazioni." />
+    <MESSAGE value="Aggiunta la schermata che mostra i film segnanalati [fittizi] (con scrollpane)." />
+    <MESSAGE value="Aggiunta schermata segnalazioni pendenti utenti. Aggiunte funzionalità ricerca utenti e film nelle relative schermate di segnalazioni pendenti. Aggiunto logo applicativo." />
+    <MESSAGE value="Aggiunta la visualizzazione delle segnalazioni gestite dei film e degli utenti, con annesso model ed fxml" />
+    <option name="LAST_COMMIT_MESSAGE" value="Aggiunta la visualizzazione delle segnalazioni gestite dei film e degli utenti, con annesso model ed fxml" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="223" y="67" width="1089" height="713" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1612977118401">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="223" y="67" width="1089" height="713" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1612977118401" />
+    <state width="1493" height="195" key="GridCell.Tab.0.bottom" timestamp="1612979490356">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="195" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1612979490356" />
+    <state width="1493" height="195" key="GridCell.Tab.0.center" timestamp="1612979490356">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="195" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1612979490356" />
+    <state width="1493" height="195" key="GridCell.Tab.0.left" timestamp="1612979490355">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="195" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1612979490355" />
+    <state width="1493" height="195" key="GridCell.Tab.0.right" timestamp="1612979490356">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="195" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1612979490356" />
+    <state width="1493" height="195" key="GridCell.Tab.1.bottom" timestamp="1612979490356">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="195" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1612979490356" />
+    <state width="1493" height="195" key="GridCell.Tab.1.center" timestamp="1612979490356">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="195" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1612979490356" />
+    <state width="1493" height="195" key="GridCell.Tab.1.left" timestamp="1612979490356">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="195" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1612979490356" />
+    <state width="1493" height="195" key="GridCell.Tab.1.right" timestamp="1612979490356">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="195" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1612979490356" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/it/unina/ingSw/cineMates20/App.java</url>
+          <line>32</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="FXMLUtils.setRoot(Resources.get(NameResources.HOME_LAYOUT))" />
+        <watch expression="e" />
+        <watch expression="var15" language="JAVA" />
+        <watch expression="this" />
+        <watch expression="properties.getProperty(name.toString())" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/CineMatesAmministratoriLS$CineMates20Amministratori.ic" NAME="CineMates20Amministratori Coverage Results" MODIFIED="1612449544280" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Desktop$CineMates20Amministratori.ic" NAME="CineMates20Amministratori Coverage Results" MODIFIED="1612892997583" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>

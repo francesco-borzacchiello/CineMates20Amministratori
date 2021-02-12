@@ -13,7 +13,10 @@ public class LoginModel {
     private final RestTemplate restTemplate;
     private final String DB_PATH,
                          ADMIN_PATH,
-                         GET_PSW_HASH_PATH;
+                         GET_PSW_HASH_PATH,
+                         EMAIL_ALREADY_EXISTS_PATH;
+
+    private String emailHash;
 
     public LoginModel() {
         restTemplate = new RestTemplate();
@@ -22,6 +25,11 @@ public class LoginModel {
         DB_PATH = Resources.get(NameResources.DB_PATH);
         ADMIN_PATH = Resources.get(NameResources.ADMIN_PATH);
         GET_PSW_HASH_PATH = Resources.get(NameResources.GET_PSW_HASH_PATH);
+        EMAIL_ALREADY_EXISTS_PATH = Resources.get(NameResources.EMAIL_ALREADY_EXISTS_PATH);
+    }
+
+    public String getEmailHash() {
+        return emailHash;
     }
 
     public boolean login(String email, String password) {
@@ -33,7 +41,7 @@ public class LoginModel {
 
     private String getPswHash(String email) {
         String url = DB_PATH + ADMIN_PATH + GET_PSW_HASH_PATH;
-        String emailHash = BCrypt.hashpw(email, BCrypt.gensalt());
+        emailHash = BCrypt.hashpw(email, BCrypt.gensalt());
 
         String pswHash = null;
 
@@ -50,5 +58,23 @@ public class LoginModel {
         }catch(HttpClientErrorException ignore) {}
 
         return pswHash;
+    }
+
+    public boolean emailAlreadyExists(String emailHash) {
+        String url = DB_PATH + ADMIN_PATH + EMAIL_ALREADY_EXISTS_PATH;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.TEXT_PLAIN);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(emailHash, headers);
+
+        try {
+            ResponseEntity<Boolean> responseEntity = restTemplate.postForEntity(url, requestEntity, Boolean.class);
+
+            if(responseEntity.getBody() != null && responseEntity.getStatusCode() == HttpStatus.OK)
+                return responseEntity.getBody();
+        }catch(HttpClientErrorException ignore) {}
+
+        return false;
     }
 }

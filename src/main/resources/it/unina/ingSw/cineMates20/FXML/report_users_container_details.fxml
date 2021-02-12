@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" styleClass="container" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unina.ingSw.cineMates20.controller.ReportUserContainerDetailsController">
+    <VBox prefHeight="200.0" prefWidth="100.0">
+        <Label fx:id="iconBack" />
+      <VBox.margin>
+         <Insets left="30.0" top="20.0" />
+      </VBox.margin>
+    </VBox>
+    <Label alignment="TOP_CENTER" styleClass="admin_style" text="Utente segnalato:" />
+    <HBox maxHeight="1.7976931348623157E308" maxWidth="370.0" minWidth="370.0" prefWidth="370.0" styleClass="report_item_button_style" stylesheets="@../CSS/style.css">
+        <ImageView fx:id="userImageView" fitHeight="100.0" fitWidth="100" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../CSS/image/profile_picture.png" />
+        </ImageView>
+        <VBox minWidth="250.0" prefHeight="130.0" prefWidth="250.0">
+            <Label fx:id="nameLabel" style="-fx-padding: 0 10 0 10;" styleClass="black_font_for_button_report" text="Nome Cognome" wrapText="true">
+                <font>
+                    <Font name="System Bold" size="20.0" />
+                </font>
+            </Label>
+            <Label fx:id="usernameLabel" style="-fx-padding: 0 10 0 10;" text="\@Username" textFill="#027db4">
+                <font>
+                    <Font size="16.0" />
+                </font>
+            </Label>
+            <Label fx:id="reportsCountLabel" style="-fx-padding: 0 10 0 10;" text="Numero segnalazioni:" textFill="#027db4">
+                <font>
+                    <Font size="16.0" />
+                </font>
+            </Label>
+        </VBox>
+      <VBox.margin>
+         <Insets top="10.0" />
+      </VBox.margin>
+    </HBox>
+    <Label alignment="TOP_CENTER" styleClass="admin_style" text="Utenti che hanno inviato la segnalazione:">
+      <VBox.margin>
+         <Insets top="20.0" />
+      </VBox.margin>
+    </Label>
+    <ScrollPane fx:id="containerScrollPane" fitToHeight="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="750.0" prefWidth="1150.0" style="-fx-background: #027db4;" styleClass="container" />
+</VBox>

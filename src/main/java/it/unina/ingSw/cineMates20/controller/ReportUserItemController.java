@@ -3,10 +3,12 @@ package it.unina.ingSw.cineMates20.controller;
 import it.unina.ingSw.cineMates20.model.S3Manager;
 import it.unina.ingSw.cineMates20.model.UserDB;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 
@@ -31,7 +33,7 @@ public class ReportUserItemController extends Controller {
     @Override
     protected void initialize() {}
 
-    public void start(UserDB user, int numSegnalazioni) {
+    public void start(UserDB user, int numSegnalazioni, Runnable listener) {
         Platform.runLater(()-> {
             nameLabel.setText(user.getNome() + " " + user.getCognome());
             reportsCountLabel.setText(reportsCountLabel.getText() + " " + numSegnalazioni);
@@ -53,7 +55,14 @@ public class ReportUserItemController extends Controller {
                 });
             }).start();
 
-            //TODO: listener userHBox
+            userHBox.setOnMouseClicked(mouseEvent -> listener.run());
+        });
+    }
+
+    public void hideReportsNumberLabel() {
+        Platform.runLater(()-> {
+            reportsCountLabel.setVisible(false);
+            reportsCountLabel.setManaged(false);
         });
     }
 }

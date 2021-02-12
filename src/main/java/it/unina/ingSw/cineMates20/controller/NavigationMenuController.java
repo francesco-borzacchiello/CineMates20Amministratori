@@ -2,7 +2,9 @@ package it.unina.ingSw.cineMates20.controller;
 
 import it.unina.ingSw.cineMates20.App;
 import it.unina.ingSw.cineMates20.model.S3Manager;
+import it.unina.ingSw.cineMates20.model.UserDB;
 import it.unina.ingSw.cineMates20.utils.NameResources;
+import it.unina.ingSw.cineMates20.utils.Resources;
 import it.unina.ingSw.cineMates20.view.MessageDialog;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +16,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.springframework.http.*;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +33,9 @@ public class NavigationMenuController extends Controller {
     @FXML
     private Label pendingReportsLabel,
                   managedReportsLabel,
-                  informationLabel;
+                  informationLabel,
+                  adminName,
+                  adminSurname;
 
     @FXML
     private HBox pendingReportsHBox,
@@ -76,6 +84,33 @@ public class NavigationMenuController extends Controller {
 
         pendingReportsLabel.getStyleClass().clear();
         pendingReportsLabel.getStyleClass().addAll("cyan_font_for_button_selected", "padding_1em");
+
+        initializeBasicAdminInfo();
+    }
+
+    //TODO: spostare questo metodo in una classe di model
+    private void initializeBasicAdminInfo() {
+        String emailHash = Resources.getEmailHash();
+
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.TEXT_PLAIN);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(emailHash, headers);
+        String url = Resources.get(NameResources.DB_PATH) + Resources.get(NameResources.ADMIN_PATH) + Resources.get(NameResources.GET_BASIC_ADMIN_INFO_PATH);
+        UserDB basicAdminInfo = null;
+        try {
+            ResponseEntity<UserDB> responseEntity = restTemplate.postForEntity(url, requestEntity, UserDB.class);
+
+            if(responseEntity.getStatusCode() == HttpStatus.OK)
+                basicAdminInfo = responseEntity.getBody();
+        }catch(HttpClientErrorException ignore) {}
+
+        if(basicAdminInfo != null) {
+            adminName.setText(basicAdminInfo.getNome());
+            adminSurname.setText(basicAdminInfo.getCognome());
+        }
     }
 
     private void addEventListener() {
@@ -90,6 +125,7 @@ public class NavigationMenuController extends Controller {
         logOutHBox.setOnMouseClicked(mouseEvent -> {
             Stage actualStage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
             try {
+                Resources.removeHashEmail();
                 openLogin();
             } catch (IOException e) {
                 MessageDialog.error("Si è verificato un errore",

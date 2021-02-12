@@ -209,3 +209,31 @@
     -fx-border-radius: 2em;
     -fx-border-color: black;
 }
+
+/*****************************************Report Button**********************************************/
+
+.approvaButton {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+}
+
+.approvaButton:hover {
+    -fx-background-color: #E50000;
+}
+
+.rigettaButton {
+    -fx-background-color: white;
+}
+
+.rigettaButton:hover {
+    -fx-background-color: #D0D0D0;
+}
+
+.oscuraButton {
+    -fx-background-color: #141414;
+    -fx-text-fill: white;
+}
+
+.oscuraButton:hover {
+    -fx-background-color: black;
+}

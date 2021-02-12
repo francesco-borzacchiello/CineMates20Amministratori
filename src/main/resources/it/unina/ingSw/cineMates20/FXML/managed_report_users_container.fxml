@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import org.controlsfx.control.textfield.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" styleClass="container" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unina.ingSw.cineMates20.controller.ManegedReportUsersContainerController">
+<VBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" styleClass="container" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unina.ingSw.cineMates20.controller.ManagedReportUsersContainerController">
     <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="300.0">
         <Label fx:id="iconBack" />
           <CustomTextField fx:id="searchBoxCustomTextField" focusTraversable="false" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onEnter" prefWidth="300.0" promptText="Cerca" styleClass="searchBoxStyle">

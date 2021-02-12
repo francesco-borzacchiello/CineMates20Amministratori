@@ -13,10 +13,10 @@
       <String fx:value="padding_1em" />
    </styleClass>
    <HBox prefHeight="100.0" prefWidth="200.0" styleClass="padding_1em">
-      <ImageView fx:id="profile_image" fitHeight="104.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true"/>
-      <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
-         <Label styleClass="admin_style" text="Nome" />
-         <Label styleClass="admin_style" text="Cognome" />
+      <ImageView fx:id="profile_image" fitHeight="104.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" />
+      <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="165.0">
+         <Label fx:id="adminName" styleClass="admin_style" text="Nome" />
+         <Label fx:id="adminSurname" styleClass="admin_style" text="Cognome" />
       </VBox>
    </HBox>
    <Separator prefWidth="200.0" styleClass="up_black_line" />

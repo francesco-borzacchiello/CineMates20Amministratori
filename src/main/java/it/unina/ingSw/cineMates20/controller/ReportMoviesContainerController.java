@@ -7,6 +7,7 @@ import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.MovieDb;
 import it.unina.ingSw.cineMates20.model.ReportHttpRequests;
 import it.unina.ingSw.cineMates20.model.ReportMovieDB;
+import it.unina.ingSw.cineMates20.model.UserDB;
 import it.unina.ingSw.cineMates20.utils.NameResources;
 import it.unina.ingSw.cineMates20.utils.Resources;
 import it.unina.ingSw.cineMates20.view.GridPaneGenerator;
@@ -20,6 +21,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.controlsfx.control.textfield.CustomTextField;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.*;
@@ -40,13 +43,27 @@ public class ReportMoviesContainerController extends Controller{
     @FXML
     private ScrollPane containerScrollPane;
 
-    private Map<MovieDb, List<String>> sortedMoviesMapByTitles,
-                                       sortedMoviesMapByReportsNum;
+    private Map<MovieDb, List<ReportMovieDB>> sortedMoviesMapByTitles,
+                                              sortedMoviesMapByReportsNum;
 
     private GridPane moviesByTitlesGridPane,
                      moviesByReportsNumGridPane;
 
     private boolean sortedByReportsNumber;
+
+    private HomeController homeController;
+    private Node reportMoviesContainerNode;
+
+    private final RestTemplate restTemplate;
+    private final String getUserUrl;
+
+    private ArrayList<Runnable> moviesByTitlesRunnables;
+
+    public ReportMoviesContainerController() {
+        restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+        getUserUrl = Resources.get(NameResources.DB_PATH) + "User/getById/{email}";
+    }
 
     @FXML
     @Override
@@ -73,26 +90,61 @@ public class ReportMoviesContainerController extends Controller{
             actualMovie = tmdbMovies.getMovie(reportedMovieDB.getFKFilmSegnalato().intValue(), "it");
 
             if(sortedMoviesMapByReportsNum.get(actualMovie) == null) {
-                ArrayList<String> list1 = new ArrayList<>(), list2 = new ArrayList<>();
-                list1.add(reportedMovieDB.getFKUtenteSegnalatore());
-                list2.add(reportedMovieDB.getFKUtenteSegnalatore());
+                ArrayList<ReportMovieDB> list1 = new ArrayList<>(), list2 = new ArrayList<>();
+                list1.add(reportedMovieDB);
+                list2.add(reportedMovieDB);
                 sortedMoviesMapByReportsNum.put(actualMovie, list1); //Inizialmente le mappe non sono ordinate
                 sortedMoviesMapByTitles.put(actualMovie, list2);
             }
             else {
-                sortedMoviesMapByReportsNum.get(actualMovie).add(reportedMovieDB.getFKUtenteSegnalatore());
-                sortedMoviesMapByTitles.get(actualMovie).add(reportedMovieDB.getFKUtenteSegnalatore());
+                sortedMoviesMapByReportsNum.get(actualMovie).add(reportedMovieDB);
+                sortedMoviesMapByTitles.get(actualMovie).add(reportedMovieDB);
             }
         }
 
         initializeMapByTitles();
         initializeMapByReportsNum();
 
-        moviesByReportsNumGridPane = GridPaneGenerator.generateMoviesGridPane(sortedMoviesMapByReportsNum);
+        moviesByTitlesRunnables = new ArrayList<>();
+        ArrayList<Runnable> moviesByReportsNumRunnables = new ArrayList<>();
+
+        for(Map.Entry<MovieDb, List<ReportMovieDB>> entry: sortedMoviesMapByReportsNum.entrySet())
+            moviesByReportsNumRunnables.add(getEventListenerForSelectedMovie(entry.getKey(), entry.getValue()));
+
+        for(Map.Entry<MovieDb, List<ReportMovieDB>> entry: sortedMoviesMapByTitles.entrySet())
+            moviesByTitlesRunnables.add(getEventListenerForSelectedMovie(entry.getKey(), entry.getValue()));
+
+        moviesByReportsNumGridPane = GridPaneGenerator.generateMoviesGridPane(sortedMoviesMapByReportsNum, moviesByReportsNumRunnables);
 
         //Di default viene mostrato ordinamento decrescente per numero di segnalazioni
         containerScrollPane.setContent(moviesByReportsNumGridPane);
         sortedByReportsNumber = true;
+    }
+
+    private Runnable getEventListenerForSelectedMovie(MovieDb movie, List<ReportMovieDB> reporters) {
+        return ()-> {
+            ArrayList<UserDB> usersReporters = new ArrayList<>();
+
+            for(ReportMovieDB reporter: reporters) {
+                String reporterEmail = reporter.getFKUtenteSegnalatore();
+                usersReporters.add(restTemplate.getForObject(getUserUrl, UserDB.class, reporterEmail));
+            }
+
+            try {
+                new ReportMoviesContainerDetailsController().startPendingReports(movie, usersReporters, homeController, this);
+            }catch(IOException ignore) {}
+        };
+    }
+
+    public List<ReportMovieDB> getUserMovieReports(MovieDb movie, String userEmail) {
+        List<ReportMovieDB> userMovieReports = new ArrayList<>();
+
+        //Qualunque delle due mappe va bene
+        for(ReportMovieDB reportMovieDB: sortedMoviesMapByReportsNum.get(movie))
+            if(reportMovieDB.getFKFilmSegnalato() == movie.getId() && reportMovieDB.getFKUtenteSegnalatore().equals(userEmail))
+                userMovieReports.add(reportMovieDB);
+
+        return userMovieReports;
     }
 
     @FXML
@@ -115,22 +167,26 @@ public class ReportMoviesContainerController extends Controller{
 
         iconSort.setVisible(false);
 
-        Map<MovieDb, List<String>> queryMap = new LinkedHashMap<>();
+        Map<MovieDb, List<ReportMovieDB>> queryMap = new LinkedHashMap<>();
+        ArrayList<Runnable> runnables = new ArrayList<>();
 
         /* Si sceglie di iterare su sortedMoviesMapByReportsNum tuttavia è indifferente
          * su quale delle due si itera, essendo i contenuti delle due mappe gli stessi */
-        for(Map.Entry<MovieDb, List<String>> entry: sortedMoviesMapByReportsNum.entrySet()) {
+        for(Map.Entry<MovieDb, List<ReportMovieDB>> entry: sortedMoviesMapByReportsNum.entrySet()) {
             MovieDb actualMovie = entry.getKey();
             if( (actualMovie.getTitle() != null && containsIgnoreCase(actualMovie.getTitle(), query) )
-               || ( containsIgnoreCase(actualMovie.getOriginalTitle(), query)) )
+               || ( containsIgnoreCase(actualMovie.getOriginalTitle(), query)) ) {
+
                 queryMap.put(entry.getKey(), entry.getValue());
+                runnables.add(getEventListenerForSelectedMovie(actualMovie, entry.getValue()));
+            }
         }
 
         if(queryMap.size() > 0) {
             if(emptyDialogVBox.isVisible())
                 hideEmptySearch();
 
-            containerScrollPane.setContent(GridPaneGenerator.generateMoviesGridPane(queryMap));
+            containerScrollPane.setContent(GridPaneGenerator.generateMoviesGridPane(queryMap, runnables));
         }
         else
             showEmptySearch();
@@ -195,7 +251,7 @@ public class ReportMoviesContainerController extends Controller{
             else {
                 try {
                     Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-                    new HomeController().start(true);
+                    homeController.start(true);
                     stage.close();
                 } catch (IOException ignore) {}
             }
@@ -204,7 +260,7 @@ public class ReportMoviesContainerController extends Controller{
         iconSort.setOnMouseClicked(mouseEvent -> {
             if(sortedByReportsNumber) {
                 if(moviesByTitlesGridPane == null)
-                    moviesByTitlesGridPane = GridPaneGenerator.generateMoviesGridPane(sortedMoviesMapByTitles);
+                    moviesByTitlesGridPane = GridPaneGenerator.generateMoviesGridPane(sortedMoviesMapByTitles, moviesByTitlesRunnables);
                 containerScrollPane.setContent(moviesByTitlesGridPane);
                 sortedByReportsNumber = false;
             }
@@ -255,5 +311,21 @@ public class ReportMoviesContainerController extends Controller{
         icon = GlyphsDude.createIcon(FontAwesomeIcon.SEARCH, "1.5em");
         icon.setFill(Paint.valueOf("rgb(150,150,150)"));
         searchBoxLabel.setGraphic(icon);
+    }
+
+    public void setHomeController(HomeController homeController) {
+        this.homeController = homeController;
+    }
+
+    public void showAgain() {
+        homeController.replaceHomeNode(reportMoviesContainerNode);
+    }
+
+    public void setReportMoviesContainerNode(Node reportMoviesContainerNode) {
+        this.reportMoviesContainerNode = reportMoviesContainerNode;
+    }
+
+    public void updateReportsLayout() {
+        new Thread(this::initialize).start();
     }
 }

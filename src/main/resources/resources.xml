@@ -10,6 +10,8 @@
     <entry key="NAVIGATION_MENU_LAYOUT">navigation_menu</entry>
     <entry key="REPORT_MOVIE_ITEM_LAYOUT">report_movie_item</entry>
     <entry key="REPORT_USER_ITEM_LAYOUT">report_user_item</entry>
+    <entry key="REPORT_USERS_CONTAINER_DETAILS_LAYOUT">report_users_container_details</entry>
+    <entry key="REPORT_MOVIES_CONTAINER_DETAILS_LAYOUT">report_movies_container_details</entry>
 
     <!-- Path DB interno -->
     <entry key="DB_PATH">http://databasecinemates20-env.eba-itkikzsk.eu-west-3.elasticbeanstalk.com/ServerCineMates20/</entry>
@@ -17,8 +19,14 @@
     <!-- Path admin -->
     <entry key="ADMIN_PATH">Admin/</entry>
 
-    <!-- Path recupero hash password -->
+    <!-- Path segnalazioni -->
+    <entry key="REPORT_PATH">Report/</entry>
+    <entry key="UPDATE_MOVIE_REPORT_PATH">administratorHandledMovieReport</entry>
+
+    <!-- Path metodi admin -->
     <entry key="GET_PSW_HASH_PATH">getHashPassword</entry>
+    <entry key="EMAIL_ALREADY_EXISTS_PATH">emailHashAlreadyExists</entry>
+    <entry key="GET_BASIC_ADMIN_INFO_PATH">getBasicAdminInfo</entry>
 
     <!-- TODO: spostare le credenziali in un luogo sicuro -->
     <!-- Credenziali IAM User AWS -->
@@ -32,5 +40,5 @@
     <entry key="TMDB_API_KEY">b3a2d6a56e6622052bbf6936ff2ace73</entry>
     <entry key="FIRST_PATH_IMAGE">https://www.themoviedb.org/t/p/w185</entry>
     <entry key="FIRST_PATH_IMAGE_ORIGINAL">https://www.themoviedb.org/t/p/original</entry>
-
+    <entry key="LOGGED_USER_EMAIL"></entry>
 </properties>

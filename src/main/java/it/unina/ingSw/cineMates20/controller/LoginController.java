@@ -95,15 +95,17 @@ public class LoginController extends Controller{
         loginButton.setOnAction(event -> {
             loginStage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             try {
-                if(loginModel.login(emailTextField.getText(), passwordField.getText()))
+                if(loginModel.login(emailTextField.getText(), passwordField.getText())) {
+                    Resources.storeHashEmail(loginModel.getEmailHash());
                     new HomeController().start(true);
-                else
+                } else
                     MessageDialog.info("Credenziali errate", "Email e password non corrispondono!!");
             }catch(Exception e){
                 //loginStage.close();
                 MessageDialog.error("Si è verificato un errore",
                         "Si è verificato un errore, riprova tra qualche minuto a riaprire l'applicativo!!");
             }
+
             loginStage.close();
         });
     }

@@ -26,7 +26,7 @@ import java.util.*;
 
 import static java.util.stream.Collectors.toMap;
 
-public class ManegedReportUsersContainerController extends Controller{
+public class ManagedReportUsersContainerController extends Controller{
 
     @FXML
     private VBox emptyDialogVBox;
@@ -46,7 +46,22 @@ public class ManegedReportUsersContainerController extends Controller{
     private GridPane usersByNameGridPane,
                      usersByReportsNumGridPane;
 
+    private ArrayList<Runnable> usersByNameRunnables;
+
     private boolean sortedByReportsNumber;
+
+    private HomeController homeController;
+
+    private final RestTemplate restTemplate;
+    private final String getUserUrl;
+
+    private Node managedReportUserContainerNode;
+
+    public ManagedReportUsersContainerController() {
+        restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+        getUserUrl = Resources.get(NameResources.DB_PATH) + "User/getById/{email}";
+    }
 
     @FXML
     @Override
@@ -56,7 +71,7 @@ public class ManegedReportUsersContainerController extends Controller{
 
         searchBoxCustomTextField.textProperty().addListener((observable, oldValue, newValue) -> onEnter());
 
-        List<ReportUserDB> reportedUsersDB = new ReportHttpRequests().getAllManagedReportedUsers();
+        List<ReportUserDB> reportedUsersDB = new ReportHttpRequests().getAllManagedReportedUsers(Resources.getEmailHash());
         if(reportedUsersDB.size() == 0) {
             showEmptyReports();
             return;
@@ -68,12 +83,8 @@ public class ManegedReportUsersContainerController extends Controller{
         UserDB actualUser;
         sortedUsersMapByName = new LinkedHashMap<>();
 
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-        String url = Resources.get(NameResources.DB_PATH) + "User/getById/{email}";
-
         for(ReportUserDB reportedUserDB: reportedUsersDB) {
-            actualUser = restTemplate.getForObject(url, UserDB.class, reportedUserDB.getFKUtenteSegnalato());
+            actualUser = restTemplate.getForObject(getUserUrl, UserDB.class, reportedUserDB.getFKUtenteSegnalato());
 
             if(sortedUsersMapByReportsNum.get(actualUser) == null) {
                 ArrayList<String> list1 = new ArrayList<>(), list2 = new ArrayList<>();
@@ -91,11 +102,33 @@ public class ManegedReportUsersContainerController extends Controller{
         initializeMapByName();
         initializeMapByReportsNum();
 
-        usersByReportsNumGridPane = GridPaneGenerator.generateUsersGridPane(sortedUsersMapByReportsNum);
+        usersByNameRunnables = new ArrayList<>();
+        ArrayList<Runnable> usersByReportsNumRunnables = new ArrayList<>();
+
+        for(Map.Entry<UserDB, List<String>> entry: sortedUsersMapByReportsNum.entrySet())
+            usersByReportsNumRunnables.add(getEventListenerForSelectedUser(entry.getKey(), entry.getValue()));
+
+        for(Map.Entry<UserDB, List<String>> entry: sortedUsersMapByName.entrySet())
+            usersByNameRunnables.add(getEventListenerForSelectedUser(entry.getKey(), entry.getValue()));
+
+        usersByReportsNumGridPane = GridPaneGenerator.generateUsersGridPane(sortedUsersMapByReportsNum, usersByReportsNumRunnables);
 
         //Di default viene mostrato ordinamento decrescente per numero di segnalazioni
         containerScrollPane.setContent(usersByReportsNumGridPane);
         sortedByReportsNumber = true;
+    }
+
+    private Runnable getEventListenerForSelectedUser(UserDB user, List<String> reporters) {
+        return ()-> {
+            ArrayList<UserDB> usersReporters = new ArrayList<>();
+
+            for(String reporterEmail: reporters)
+                usersReporters.add(restTemplate.getForObject(getUserUrl, UserDB.class, reporterEmail));
+
+            try {
+                new ReportUserContainerDetailsController().startManagedReports(user, usersReporters, homeController, this);
+            }catch(IOException ignore) {}
+        };
     }
 
     @FXML
@@ -119,6 +152,7 @@ public class ManegedReportUsersContainerController extends Controller{
         iconSort.setVisible(false);
 
         Map<UserDB, List<String>> queryMap = new LinkedHashMap<>();
+        ArrayList<Runnable> runnables = new ArrayList<>();
 
         /* Si sceglie di iterare su sortedMoviesMapByReportsNum tuttavia è indifferente
          * su quale delle due si itera, essendo i contenuti delle due mappe gli stessi */
@@ -126,15 +160,18 @@ public class ManegedReportUsersContainerController extends Controller{
             UserDB actualUser = entry.getKey();
             if(containsIgnoreCase(actualUser.getNome(), query)
                 || containsIgnoreCase(actualUser.getCognome(), query)
-                || containsIgnoreCase(actualUser.getUsername(), query))
+                || containsIgnoreCase(actualUser.getUsername(), query)) {
+
                 queryMap.put(entry.getKey(), entry.getValue());
+                runnables.add(getEventListenerForSelectedUser(actualUser,  entry.getValue()));
+            }
         }
 
         if(queryMap.size() > 0) {
             if(emptyDialogVBox.isVisible())
                 hideEmptySearch();
 
-            containerScrollPane.setContent(GridPaneGenerator.generateUsersGridPane(queryMap));
+            containerScrollPane.setContent(GridPaneGenerator.generateUsersGridPane(queryMap, runnables));
         }
         else
             showEmptySearch();
@@ -199,7 +236,7 @@ public class ManegedReportUsersContainerController extends Controller{
             else {
                 try {
                     Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-                    new HomeController().start(false);
+                    homeController.start(false);
                     stage.close();
                 } catch (IOException ignore) {}
             }
@@ -208,7 +245,7 @@ public class ManegedReportUsersContainerController extends Controller{
         iconSort.setOnMouseClicked(mouseEvent -> {
             if(sortedByReportsNumber) {
                 if(usersByNameGridPane == null)
-                    usersByNameGridPane = GridPaneGenerator.generateUsersGridPane(sortedUsersMapByName);
+                    usersByNameGridPane = GridPaneGenerator.generateUsersGridPane(sortedUsersMapByName, usersByNameRunnables);
                 containerScrollPane.setContent(usersByNameGridPane);
                 sortedByReportsNumber = false;
             }
@@ -254,5 +291,17 @@ public class ManegedReportUsersContainerController extends Controller{
         icon = GlyphsDude.createIcon(FontAwesomeIcon.SEARCH, "1.5em");
         icon.setFill(Paint.valueOf("rgb(150,150,150)"));
         searchBoxLabel.setGraphic(icon);
+    }
+
+    public void setHomeController(HomeController homeController) {
+        this.homeController = homeController;
+    }
+
+    public void showAgain() {
+        homeController.replaceHomeNode(managedReportUserContainerNode);
+    }
+
+    public void setManagedReportUsersContainerNode(Node managedReportUserContainerNode) {
+        this.managedReportUserContainerNode = managedReportUserContainerNode;
     }
 }

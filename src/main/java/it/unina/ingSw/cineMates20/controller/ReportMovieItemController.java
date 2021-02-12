@@ -29,7 +29,7 @@ public class ReportMovieItemController extends Controller {
     @Override
     protected void initialize() {}
 
-    public void start(MovieDb movie, int numSegnalazioni) {
+    public void start(MovieDb movie, int numSegnalazioni, Runnable listener) {
         IMAGE_FIRST_PATH = Resources.get(NameResources.FIRST_PATH_IMAGE);
 
         Platform.runLater(()-> {
@@ -53,7 +53,7 @@ public class ReportMovieItemController extends Controller {
 
             reportsCountLabel.setText(reportsCountLabel.getText() + " " + numSegnalazioni);
 
-            //TODO: listener movieHBox
+            movieHBox.setOnMouseClicked(mouseEvent -> listener.run());
         });
     }
 }
