@@ -18,7 +18,7 @@ public class MessageDialog {
         message(title, message, Alert.AlertType.INFORMATION);
     }
 
-    public static void message(String title, String message, Alert.AlertType alertType){
+    private static void message(String title, String message, Alert.AlertType alertType){
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(null);

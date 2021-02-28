@@ -15,8 +15,8 @@
          <Font name="System Bold" size="35.0" />
       </font>
    </Label>
-   <TextField fx:id="emailTextField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="250.0" promptText="Indirizzo e-mail" styleClass="styleTextField" stylesheets="@../CSS/style.css" text="fran.borzacchiello@studenti.unina.it" />
-   <PasswordField fx:id="passwordField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="250.0" promptText="Password" styleClass="styleTextField" text="Francesco_Amministratore2021" />
+   <TextField fx:id="emailTextField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="250.0" promptText="Indirizzo e-mail" styleClass="styleTextField" stylesheets="@../CSS/style.css"/>
+   <PasswordField fx:id="passwordField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="250.0" promptText="Password" styleClass="styleTextField"/>
    <Button fx:id="loginButton" text="LOGIN" textFill="WHITE">
       <padding>
          <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />

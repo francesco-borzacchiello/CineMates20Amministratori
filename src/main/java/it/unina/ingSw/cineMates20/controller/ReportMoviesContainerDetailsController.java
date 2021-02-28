@@ -6,6 +6,7 @@ import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.*;
 import info.movito.themoviedbapi.model.people.PersonCrew;
+
 import it.unina.ingSw.cineMates20.App;
 import it.unina.ingSw.cineMates20.model.ReportHttpRequests;
 import it.unina.ingSw.cineMates20.model.ReportMovieDB;
@@ -14,6 +15,7 @@ import it.unina.ingSw.cineMates20.utils.NameResources;
 import it.unina.ingSw.cineMates20.utils.Resources;
 import it.unina.ingSw.cineMates20.view.GridPaneGenerator;
 import it.unina.ingSw.cineMates20.view.MessageDialog;
+
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -31,12 +33,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.regex.PatternSyntaxException;
 
-public class ReportMoviesContainerDetailsController extends Controller{
+public class ReportMoviesContainerDetailsController extends Controller {
 
     @FXML
     private Label titolo,
@@ -178,7 +181,8 @@ public class ReportMoviesContainerDetailsController extends Controller{
         return (mouseEvent -> {
             disableAllReportButtons(true);
             report.setEsitoSegnalazione(reportOutcome);
-            if(!reportHttpRequests.adminUpdateMovieReport(report, Resources.getEmailHash()))
+            String emailHash = BCrypt.hashpw(Objects.requireNonNull(Resources.getEmail()), BCrypt.gensalt());
+            if(!reportHttpRequests.adminUpdateMovieReport(report, emailHash))
                 MessageDialog.error("Si è verificato un errore", "Si è verificato un errore, riprova più tardi.");
 
             if(reportOutcome.equals("Oscurata"))
@@ -250,7 +254,7 @@ public class ReportMoviesContainerDetailsController extends Controller{
         oscuraButton.setMouseTransparent(false);
     }
 
-    //Restituisce le segnalazioni di questo utente (reporter) per il film attualmente selezionato (reportedMovie)
+    //Inizializza le segnalazioni di questo utente (reporter) per il film attualmente selezionato (reportedMovie)
     private void initializeReportReasons(UserDB reporter) {
         if(userMovieReports != null)
             userMovieReports.clear();

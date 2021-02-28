@@ -1,8 +1,10 @@
 package it.unina.ingSw.cineMates20.controller;
 
 import info.movito.themoviedbapi.model.MovieDb;
+
 import it.unina.ingSw.cineMates20.utils.NameResources;
 import it.unina.ingSw.cineMates20.utils.Resources;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

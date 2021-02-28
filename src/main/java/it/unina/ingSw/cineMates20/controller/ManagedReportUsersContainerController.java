@@ -2,12 +2,13 @@ package it.unina.ingSw.cineMates20.controller;
 
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+
 import it.unina.ingSw.cineMates20.model.ReportHttpRequests;
 import it.unina.ingSw.cineMates20.model.ReportUserDB;
 import it.unina.ingSw.cineMates20.model.UserDB;
-import it.unina.ingSw.cineMates20.utils.NameResources;
 import it.unina.ingSw.cineMates20.utils.Resources;
 import it.unina.ingSw.cineMates20.view.GridPaneGenerator;
+
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -19,6 +20,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.controlsfx.control.textfield.CustomTextField;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -71,7 +73,8 @@ public class ManagedReportUsersContainerController extends Controller{
 
         searchBoxCustomTextField.textProperty().addListener((observable, oldValue, newValue) -> onEnter());
 
-        List<ReportUserDB> reportedUsersDB = new ReportHttpRequests().getAllManagedReportedUsers(Resources.getEmailHash());
+        String emailHash = BCrypt.hashpw(Objects.requireNonNull(Resources.getEmail()), BCrypt.gensalt());
+        List<ReportUserDB> reportedUsersDB = new ReportHttpRequests().getAllManagedReportedUsers(emailHash);
         if(reportedUsersDB.size() == 0) {
             showEmptyReports();
             return;

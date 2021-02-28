@@ -2,6 +2,7 @@ package it.unina.ingSw.cineMates20.model;
 
 import it.unina.ingSw.cineMates20.utils.NameResources;
 import it.unina.ingSw.cineMates20.utils.Resources;
+
 import org.springframework.http.*;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -16,8 +17,6 @@ public class LoginModel {
                          GET_PSW_HASH_PATH,
                          EMAIL_ALREADY_EXISTS_PATH;
 
-    private String emailHash;
-
     public LoginModel() {
         restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
@@ -26,10 +25,6 @@ public class LoginModel {
         ADMIN_PATH = Resources.get(NameResources.ADMIN_PATH);
         GET_PSW_HASH_PATH = Resources.get(NameResources.GET_PSW_HASH_PATH);
         EMAIL_ALREADY_EXISTS_PATH = Resources.get(NameResources.EMAIL_ALREADY_EXISTS_PATH);
-    }
-
-    public String getEmailHash() {
-        return emailHash;
     }
 
     public boolean login(String email, String password) {
@@ -41,7 +36,7 @@ public class LoginModel {
 
     private String getPswHash(String email) {
         String url = DB_PATH + ADMIN_PATH + GET_PSW_HASH_PATH;
-        emailHash = BCrypt.hashpw(email, BCrypt.gensalt());
+        String emailHash = BCrypt.hashpw(email, BCrypt.gensalt());
 
         String pswHash = null;
 
@@ -76,5 +71,24 @@ public class LoginModel {
         }catch(HttpClientErrorException ignore) {}
 
         return false;
+    }
+
+    public UserDB getAdminBasicInfo(String emailHash) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.TEXT_PLAIN);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(emailHash, headers);
+        String url = Resources.getDbPath() + Resources.get(NameResources.ADMIN_PATH) + Resources.get(NameResources.GET_BASIC_ADMIN_INFO_PATH);
+        UserDB basicAdminInfo = null;
+        try {
+            ResponseEntity<UserDB> responseEntity = restTemplate.postForEntity(url, requestEntity, UserDB.class);
+
+            if(responseEntity.getStatusCode() == HttpStatus.OK)
+                basicAdminInfo = responseEntity.getBody();
+        }catch(HttpClientErrorException ignore) {}
+
+        return basicAdminInfo;
     }
 }

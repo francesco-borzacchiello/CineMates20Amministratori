@@ -1,6 +1,7 @@
 package it.unina.ingSw.cineMates20.utils;
 
 import it.unina.ingSw.cineMates20.App;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

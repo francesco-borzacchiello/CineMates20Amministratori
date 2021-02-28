@@ -4,9 +4,11 @@ import it.unina.ingSw.cineMates20.controller.HomeController;
 import it.unina.ingSw.cineMates20.controller.LoginController;
 import it.unina.ingSw.cineMates20.model.LoginModel;
 import it.unina.ingSw.cineMates20.utils.Resources;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.io.IOException;
 
@@ -24,13 +26,18 @@ public class App extends Application {
     }
 
     private boolean alreadyLoggedIn() {
-        String hashEmail = Resources.getEmailHash();
+        String email = Resources.getEmail();
+        if(email == null) return false;
+
+        String emailHash = BCrypt.hashpw(email, BCrypt.gensalt());
         LoginModel loginModel = new LoginModel();
-        if(hashEmail != null && !loginModel.emailAlreadyExists(hashEmail)) {
-            Resources.removeHashEmail();
+
+        if(!loginModel.emailAlreadyExists(emailHash)) {
+            Resources.removeEmail();
             return false;
         }
-        else return loginModel.emailAlreadyExists(hashEmail);
+        else
+            return true;
     }
 
     public static void main(String[] args) {

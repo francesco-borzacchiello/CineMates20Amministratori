@@ -1,6 +1,7 @@
 package it.unina.ingSw.cineMates20.view;
 
 import info.movito.themoviedbapi.model.MovieDb;
+
 import it.unina.ingSw.cineMates20.App;
 import it.unina.ingSw.cineMates20.controller.ReportMovieItemController;
 import it.unina.ingSw.cineMates20.controller.ReportUserItemController;
@@ -9,6 +10,7 @@ import it.unina.ingSw.cineMates20.model.ReportUserDB;
 import it.unina.ingSw.cineMates20.model.UserDB;
 import it.unina.ingSw.cineMates20.utils.NameResources;
 import it.unina.ingSw.cineMates20.utils.Resources;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
@@ -32,7 +34,6 @@ public class GridPaneGenerator {
                         (Resources.get(NameResources.DIRECTORY_FXML) + "/" + Resources.get(NameResources.REPORT_MOVIE_ITEM_LAYOUT) + ".fxml"));
                 Node item = loader.load();
                 ReportMovieItemController reportMovieItemController = loader.getController();
-
 
                 reportMovieItemController.start(movie, reportedMoviesMap.get(movie).size(), runnables.get(index));
 

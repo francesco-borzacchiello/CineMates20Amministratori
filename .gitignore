@@ -1,4 +1,4 @@
 # Project exclude paths
 /target/
-/src/main/resources/loggedUser.txt
 secretKeys.properties
+/src/main/resources/loggedUser.txt

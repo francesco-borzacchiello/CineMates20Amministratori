@@ -1,11 +1,12 @@
 package it.unina.ingSw.cineMates20.controller;
 
 import it.unina.ingSw.cineMates20.App;
+import it.unina.ingSw.cineMates20.model.LoginModel;
 import it.unina.ingSw.cineMates20.model.S3Manager;
 import it.unina.ingSw.cineMates20.model.UserDB;
-import it.unina.ingSw.cineMates20.utils.NameResources;
 import it.unina.ingSw.cineMates20.utils.Resources;
 import it.unina.ingSw.cineMates20.view.MessageDialog;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,14 +17,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.springframework.http.*;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 public class NavigationMenuController extends Controller {
 
@@ -63,17 +62,17 @@ public class NavigationMenuController extends Controller {
     }
 
     public void start(HomeController homeController) {
-        addEventListener();
+        addEventListeners();
         this.homeController = homeController;
     }
 
     @FXML
     @Override
     protected void initialize() {
-        InputStream profileImageInputStream = s3Manager.getProfilePictureInputStream("fran.borzacchiello@studenti.unina.it");
+        InputStream profileImageInputStream = s3Manager.getProfilePictureInputStream(Objects.requireNonNull(Resources.getEmail()));
         Image image;
         if (profileImageInputStream != null)
-            image = new Image(profileImageInputStream);
+            image = new Image(profileImageInputStream, 450, 450, false, false);
         else {
             File file = new File("src/main/resources/it/unina/ingSw/cineMates20/CSS/image/profile_picture.png");
             image = new Image(file.toURI().toString());
@@ -88,24 +87,9 @@ public class NavigationMenuController extends Controller {
         initializeBasicAdminInfo();
     }
 
-    //TODO: spostare questo metodo in una classe di model
     private void initializeBasicAdminInfo() {
-        String emailHash = Resources.getEmailHash();
-
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.TEXT_PLAIN);
-
-        HttpEntity<String> requestEntity = new HttpEntity<>(emailHash, headers);
-        String url = Resources.getDbPath() + Resources.get(NameResources.ADMIN_PATH) + Resources.get(NameResources.GET_BASIC_ADMIN_INFO_PATH);
-        UserDB basicAdminInfo = null;
-        try {
-            ResponseEntity<UserDB> responseEntity = restTemplate.postForEntity(url, requestEntity, UserDB.class);
-
-            if(responseEntity.getStatusCode() == HttpStatus.OK)
-                basicAdminInfo = responseEntity.getBody();
-        }catch(HttpClientErrorException ignore) {}
+        UserDB basicAdminInfo = new LoginModel().getAdminBasicInfo
+                (BCrypt.hashpw(Objects.requireNonNull(Resources.getEmail()), BCrypt.gensalt()));
 
         if(basicAdminInfo != null) {
             adminName.setText(basicAdminInfo.getNome());
@@ -113,7 +97,7 @@ public class NavigationMenuController extends Controller {
         }
     }
 
-    private void addEventListener() {
+    private void addEventListeners() {
         addEventListenerToLogoutButton();
         addEventListenerToPendingReportsButton();
         addEventListenerToManagedReportsButton();
@@ -125,7 +109,7 @@ public class NavigationMenuController extends Controller {
         logOutHBox.setOnMouseClicked(mouseEvent -> {
             Stage actualStage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
             try {
-                Resources.removeHashEmail();
+                Resources.removeEmail();
                 openLogin();
             } catch (IOException e) {
                 MessageDialog.error("Si è verificato un errore",
@@ -186,7 +170,7 @@ public class NavigationMenuController extends Controller {
             File file = fileChooser.showOpenDialog(actualStage); //Blocca actualStage mentre fileChooser è aperto
             if(file != null) {
                 //Se l'upload della nuova immagine è andato a buon fine, si aggiorna l'immagine del profilo
-                if(s3Manager.uploadImage("fran.borzacchiello@studenti.unina.it", file))
+                if(s3Manager.uploadImage(Objects.requireNonNull(Resources.getEmail()), file))
                     profile_image.setImage(new Image(file.toURI().toString()));
             }
         });

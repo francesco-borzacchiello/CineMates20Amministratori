@@ -5,12 +5,13 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.MovieDb;
+
 import it.unina.ingSw.cineMates20.model.ReportHttpRequests;
 import it.unina.ingSw.cineMates20.model.ReportMovieDB;
 import it.unina.ingSw.cineMates20.model.UserDB;
-import it.unina.ingSw.cineMates20.utils.NameResources;
 import it.unina.ingSw.cineMates20.utils.Resources;
 import it.unina.ingSw.cineMates20.view.GridPaneGenerator;
+
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -22,6 +23,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.controlsfx.control.textfield.CustomTextField;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -73,7 +75,8 @@ public class ManagedReportsMoviesContainerController extends Controller{
 
         searchBoxCustomTextField.textProperty().addListener((observable, oldValue, newValue) -> onEnter());
 
-        List<ReportMovieDB> reportedMoviesDB = new ReportHttpRequests().getAllManagedReportedMovies(Resources.getEmailHash());
+        String emailHash = BCrypt.hashpw(Objects.requireNonNull(Resources.getEmail()), BCrypt.gensalt());
+        List<ReportMovieDB> reportedMoviesDB = new ReportHttpRequests().getAllManagedReportedMovies(emailHash);
         if(reportedMoviesDB.size() == 0){
             showEmptyReports();
             return;
@@ -174,8 +177,8 @@ public class ManagedReportsMoviesContainerController extends Controller{
          * su quale delle due si itera, essendo i contenuti delle due mappe gli stessi */
         for(Map.Entry<MovieDb, List<ReportMovieDB>> entry: sortedMoviesMapByReportsNum.entrySet()) {
             MovieDb actualMovie = entry.getKey();
-            if( (actualMovie.getTitle() != null && containsIgnoreCase(actualMovie.getTitle(), query) )
-               || ( containsIgnoreCase(actualMovie.getOriginalTitle(), query)) ) {
+            if((actualMovie.getTitle() != null && containsIgnoreCase(actualMovie.getTitle(), query))
+               || (containsIgnoreCase(actualMovie.getOriginalTitle(), query))) {
 
                 queryMap.put(entry.getKey(), entry.getValue());
                 runnables.add(getEventListenerForSelectedMovie(actualMovie, entry.getValue()));

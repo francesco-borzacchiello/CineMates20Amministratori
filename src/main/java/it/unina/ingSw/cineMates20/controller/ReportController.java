@@ -1,15 +1,13 @@
 package it.unina.ingSw.cineMates20.controller;
 
 import it.unina.ingSw.cineMates20.App;
-import it.unina.ingSw.cineMates20.utils.FXMLUtils;
 import it.unina.ingSw.cineMates20.utils.NameResources;
 import it.unina.ingSw.cineMates20.utils.Resources;
-import it.unina.ingSw.cineMates20.view.MessageDialog;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
